@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -42,7 +50,8 @@ class UploadController extends MineController
     {
         if ($request->validated() && $request->file('file')->isValid()) {
             $data = $this->service->upload(
-                $request->file('file'), $request->all(),
+                $request->file('file'),
+                $request->all(),
             );
 
             return empty($data) ? $this->error() : $this->success($data);
@@ -62,7 +71,8 @@ class UploadController extends MineController
     {
         if ($request->validated() && $request->file('image')->isValid()) {
             $data = $this->service->upload(
-                $request->file('image'), $request->all(),
+                $request->file('image'),
+                $request->all(),
             );
 
             return empty($data) ? $this->error() : $this->success($data);
@@ -115,7 +125,7 @@ class UploadController extends MineController
     #[GetMapping('getFileInfoById')]
     public function getFileInfoByid(): ResponseInterface
     {
-        return $this->success($this->service->read((int)$this->request->input('id', null)) ?? []);
+        return $this->success($this->service->read((int) $this->request->input('id', null)) ?? []);
     }
 
     /**
@@ -141,8 +151,8 @@ class UploadController extends MineController
         if (empty($id)) {
             return $this->error('附件ID必填');
         }
-        $model = $this->service->read((int)$id);
-        if (!$model) {
+        $model = $this->service->read((int) $id);
+        if (! $model) {
             throw new MineException('附件不存在', 500);
         }
 
@@ -162,7 +172,7 @@ class UploadController extends MineController
             return $this->error('附件hash必填');
         }
         $model = $this->service->readByHash($hash);
-        if (!$model) {
+        if (! $model) {
             throw new MineException('附件不存在', 500);
         }
 

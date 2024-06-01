@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -44,15 +51,15 @@ class CreateSystemMenuTable extends Migration
             ])->nullable();
             $table->addColumn('smallInteger', 'sort', [
                 'unsigned' => true,
-                'default'  => 0,
-                'comment'  => '排序',
+                'default' => 0,
+                'comment' => '排序',
             ])->nullable();
             $table->addColumn('bigInteger', 'created_by', ['comment' => '创建者'])->nullable();
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->timestamps();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment'   => '删除时间',
+                'comment' => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

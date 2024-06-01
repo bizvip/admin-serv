@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Controller\Tools;
 
@@ -93,7 +101,7 @@ class SettingDatasourceController extends MineController
     #[DeleteMapping('delete'), Permission('setting:datasource:delete'), OperationLog]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

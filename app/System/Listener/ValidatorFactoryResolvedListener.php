@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Listener;
 
@@ -31,7 +39,7 @@ class ValidatorFactoryResolvedListener implements ListenerInterface
             array $parameters,
             Validator $validator,
         ): bool {
-            return (bool)preg_match('/^1[3-9]\d{9}$/', $value);
+            return (bool) preg_match('/^1[3-9]\d{9}$/', $value);
         });
     }
 }

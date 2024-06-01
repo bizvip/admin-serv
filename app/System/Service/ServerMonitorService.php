@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -34,8 +42,8 @@ class ServerMonitorService
                     }
                 }
             } elseif ($this->isCygwin()) {
-                $cpu   = shell_exec('wmic cpu get LoadPercentage | findstr /V "LoadPercentage"');
-                $cpu   = intval(trim($cpu ?? '0'));
+                $cpu = shell_exec('wmic cpu get LoadPercentage | findstr /V "LoadPercentage"');
+                $cpu = intval(trim($cpu ?? '0'));
                 $cache = shell_exec('wmic cpu get L3CacheSize | findstr /V "L3CacheSize"');
                 $cache = trim($cache ?? '');
                 if ($cache == '') {
@@ -54,22 +62,22 @@ class ServerMonitorService
             }
 
             return [
-                'name'  => $this->getCpuName(),
+                'name' => $this->getCpuName(),
                 'cores' => '物理核心数：' . $this->getCpuPhysicsCores() . '个，逻辑核心数：' . $this->getCpuLogicCores() . '个',
                 'cache' => $cache[1] ? $cache[1] / 1024 : 0,
                 'usage' => $cpu,
-                'free'  => round(100 - $cpu, 2),
+                'free' => round(100 - $cpu, 2),
             ];
         } catch (\Throwable $e) {
             $res = '无法获取';
             echo $e->getMessage(), "\n";
 
             return [
-                'name'  => $res,
+                'name' => $res,
                 'cores' => $res,
                 'cache' => $res,
                 'usage' => $res,
-                'free'  => $res,
+                'free' => $res,
             ];
         }
     }
@@ -123,10 +131,10 @@ class ServerMonitorService
             return intval($num) == 0 ? '1' : $num;
         }
         if ($this->isCygwin()) {
-            $num  = shell_exec('wmic cpu get NumberOfCores | findstr /V "NumberOfCores"');
-            $num  = trim($num ?? '1');
+            $num = shell_exec('wmic cpu get NumberOfCores | findstr /V "NumberOfCores"');
+            $num = trim($num ?? '1');
             $nums = explode("\n", $num);
-            $num  = 0;
+            $num = 0;
             foreach ($nums as $n) {
                 $num += intval(trim($n));
             }
@@ -146,10 +154,10 @@ class ServerMonitorService
             return str_replace("\n", '', shell_exec('cat /proc/cpuinfo |grep "processor"|wc -l'));
         }
         if ($this->isCygwin()) {
-            $num  = shell_exec('wmic cpu get NumberOfLogicalProcessors | findstr /V "NumberOfLogicalProcessors"');
-            $num  = trim($num ?? '1');
+            $num = shell_exec('wmic cpu get NumberOfLogicalProcessors | findstr /V "NumberOfLogicalProcessors"');
+            $num = trim($num ?? '1');
             $nums = explode("\n", $num);
-            $num  = 0;
+            $num = 0;
             foreach ($nums as $n) {
                 $num += intval(trim($n));
             }
@@ -170,10 +178,10 @@ class ServerMonitorService
         $end = $this->calculationCpu();
 
         $totalStart = $start['total'];
-        $totalEnd   = $end['total'];
+        $totalEnd = $end['total'];
 
         $timeStart = $start['time'];
-        $timeEnd   = $end['time'];
+        $timeEnd = $end['time'];
 
         return sprintf('%.2f', ($timeEnd - $timeStart) / ($totalEnd - $totalStart) * 100);
     }
@@ -201,34 +209,37 @@ class ServerMonitorService
             $result['php'] = round(memory_get_usage() / 1024 / 1024, 2);
 
             $result['rate'] = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         } elseif ($this->isCygwin()) {
-            $cap   = shell_exec('wmic Path Win32_PhysicalMemory Get Capacity | findstr /V "Capacity"');
-            $cap   = trim($cap ?? '');
+            $cap = shell_exec('wmic Path Win32_PhysicalMemory Get Capacity | findstr /V "Capacity"');
+            $cap = trim($cap ?? '');
             $total = 0;
-            $caps  = explode("\n", $cap);
+            $caps = explode("\n", $cap);
             foreach ($caps as $c) {
                 $total += intval($c);
             }
             $result['total'] = round($total / 1024 / 1024 / 1024, 2);
             // 可用物理内存
-            $free            = shell_exec('wmic OS get FreePhysicalMemory | findstr /V "FreePhysicalMemory"');
-            $result['free']  = round($free / 1024 / 1024, 2);
+            $free = shell_exec('wmic OS get FreePhysicalMemory | findstr /V "FreePhysicalMemory"');
+            $result['free'] = round($free / 1024 / 1024, 2);
             $result['usage'] = round($result['total'] - $result['free'], 2);
-            $result['php']   = round(memory_get_usage() / 1024 / 1024, 2);
-            $result['rate']  = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+            $result['php'] = round(memory_get_usage() / 1024 / 1024, 2);
+            $result['rate'] = sprintf(
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         } else {
             preg_match('/(\d+)/', shell_exec('system_profiler SPHardwareDataType | grep Memory'), $total);
             $result['total'] = $total[1];
-            $usage           = shell_exec("ps -caxm -orss | awk '{ mem += $1} END {print mem}'"); // 单位KB
+            $usage = shell_exec("ps -caxm -orss | awk '{ mem += $1} END {print mem}'"); // 单位KB
             $result['usage'] = round($usage / 1024 / 1024, 2);
-            $result['free']  = round($result['total'] - $result['usage'], 2);
-            $result['php']   = round(memory_get_usage() / 1024 / 1024, 2);
-            $result['rate']  = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+            $result['free'] = round($result['total'] - $result['usage'], 2);
+            $result['php'] = round(memory_get_usage() / 1024 / 1024, 2);
+            $result['rate'] = sprintf(
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         }
 
@@ -269,15 +280,15 @@ class ServerMonitorService
             $ds = explode('/', __DIR__);
             // 只看项目所在磁盘
             $driver = $ds[2] . ':/';
-            $info   = shell_exec("fsutil volume diskfree {$driver}");
-            $info   = trim($info ?? '');
+            $info = shell_exec("fsutil volume diskfree {$driver}");
+            $info = trim($info ?? '');
             if ($info != '') {
                 $lines = explode("\n", $info);
-                $i     = 0;
-                $free  = 0;
+                $i = 0;
+                $free = 0;
                 $total = 0;
                 foreach ($lines as $line) {
-                    $c   = explode(':', $line);
+                    $c = explode(':', $line);
                     $tmp = explode('(', $c[1]);
                     if ($i == 0) {
                         $free = intval(str_replace(',', '', $tmp[0]));
@@ -294,29 +305,32 @@ class ServerMonitorService
                 return [
                     'total' => round($total / 1024 / 1024 / 1024, 2),
                     'usage' => round($usage / 1024 / 1024 / 1024, 2),
-                    'free'  => round($free / 1024 / 1024 / 1024, 2),
-                    'rate'  => round($usage / $total * 100, 2),
+                    'free' => round($free / 1024 / 1024 / 1024, 2),
+                    'rate' => round($usage / $total * 100, 2),
                 ];
             }
 
             return [
                 'total' => 0,
                 'usage' => 0,
-                'free'  => 0,
-                'rate'  => 0,
+                'free' => 0,
+                'rate' => 0,
             ];
         }
         $hds = explode(
-            ' ', preg_replace(
-            '/\s{2,}/', ' ', shell_exec('df -h | grep -E "/$"') ?? '',
-        ),
+            ' ',
+            preg_replace(
+                '/\s{2,}/',
+                ' ',
+                shell_exec('df -h | grep -E "/$"') ?? '',
+            ),
         );
 
         return [
             'total' => $hds[1],
             'usage' => $hds[2],
-            'free'  => $hds[3],
-            'rate'  => $hds[4],
+            'free' => $hds[3],
+            'rate' => $hds[4],
         ];
     }
 
@@ -325,12 +339,12 @@ class ServerMonitorService
      */
     protected function calculationCpu(): array
     {
-        $mode   = '/(cpu)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)/';
+        $mode = '/(cpu)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)[\s]+([0-9]+)/';
         $string = shell_exec('cat /proc/stat | grep cpu');
         preg_match_all($mode, $string, $matches);
 
         $total = $matches[2][0] + $matches[3][0] + $matches[4][0] + $matches[5][0] + $matches[6][0] + $matches[7][0] + $matches[8][0] + $matches[9][0];
-        $time  = $matches[2][0] + $matches[3][0] + $matches[4][0] + $matches[6][0] + $matches[7][0] + $matches[8][0] + $matches[9][0];
+        $time = $matches[2][0] + $matches[3][0] + $matches[4][0] + $matches[6][0] + $matches[7][0] + $matches[8][0] + $matches[9][0];
 
         return ['total' => $total, 'time' => $time];
     }

@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
@@ -42,7 +50,7 @@ class SystemUploadFileMapper extends AbstractMapper
     public function getFileInfoByHash(string $hash, array $columns = ['*'])
     {
         $model = $this->model::query()->where('hash', $hash)->first($columns);
-        if (!$model) {
+        if (! $model) {
             $model = $this->model::withTrashed()->where('hash', $hash)->first(['id']);
             $model && $model->forceDelete();
 
@@ -71,7 +79,8 @@ class SystemUploadFileMapper extends AbstractMapper
         }
         if (isset($params['minDate']) && filled($params['minDate']) && isset($params['maxDate']) && filled($params['maxDate'])) {
             $query->whereBetween(
-                'created_at', [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
+                'created_at',
+                [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
             );
         }
 
@@ -94,8 +103,9 @@ class SystemUploadFileMapper extends AbstractMapper
                     '8' => 'minio',
                     default => 'local',
                 };
-                $event       = new RealDeleteUploadFile(
-                    $model, $this->container->get(FilesystemFactory::class)->get($storageMode),
+                $event = new RealDeleteUploadFile(
+                    $model,
+                    $this->container->get(FilesystemFactory::class)->get($storageMode),
                 );
                 $this->evDispatcher->dispatch($event);
                 if ($event->getConfirm()) {

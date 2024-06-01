@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
@@ -91,7 +99,7 @@ class SystemAppMapper extends AbstractMapper
             $groupIds[] = $api['group_id'];
         }
         $systemApiGroupMapper = container()->get(SystemApiGroupMapper::class);
-        $data['apiGroup']     = $systemApiGroupMapper->get(function ($query) use ($groupIds) {
+        $data['apiGroup'] = $systemApiGroupMapper->get(function ($query) use ($groupIds) {
             /* @var Hyperf\Database\Model\Builder $query */
             return $query->whereIn('id', array_unique($groupIds));
         }, ['id', 'name']);

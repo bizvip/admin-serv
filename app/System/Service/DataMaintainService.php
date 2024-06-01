@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -31,18 +39,18 @@ class DataMaintainService extends AbstractService
     {
         if ($table && env('DB_DRIVER') === 'mysql') {
             // 从数据库中获取表字段信息
-            $sql = 'SELECT * FROM `information_schema`.`columns` ' . 'WHERE TABLE_SCHEMA = ? AND table_name = ? ' . 'ORDER BY ORDINAL_POSITION';
+            $sql = 'SELECT * FROM `information_schema`.`columns` WHERE TABLE_SCHEMA = ? AND table_name = ? ORDER BY ORDINAL_POSITION';
             // 加载主表的列
             $columnList = [];
             foreach (Db::select($sql, [env('DB_DATABASE'), $table]) as $column) {
                 $columnList[] = [
-                    'column_key'     => $column->COLUMN_KEY,
-                    'column_name'    => $column->COLUMN_NAME,
-                    'data_type'      => $column->DATA_TYPE,
+                    'column_key' => $column->COLUMN_KEY,
+                    'column_name' => $column->COLUMN_NAME,
+                    'data_type' => $column->DATA_TYPE,
                     'column_comment' => $column->COLUMN_COMMENT,
-                    'extra'          => $column->EXTRA,
-                    'column_type'    => $column->COLUMN_TYPE,
-                    'is_nullable'    => $column->IS_NULLABLE,
+                    'extra' => $column->EXTRA,
+                    'column_type' => $column->COLUMN_TYPE,
+                    'is_nullable' => $column->IS_NULLABLE,
                 ];
             }
 
@@ -111,7 +119,7 @@ class DataMaintainService extends AbstractService
     {
         $tables = [];
         foreach ($data as $item) {
-            $tables[] = array_change_key_case((array)$item);
+            $tables[] = array_change_key_case((array) $item);
         }
 
         return $tables;

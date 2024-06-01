@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -61,7 +69,7 @@ class SystemAppService extends AbstractService
 
     public function getApiList(?int $id): array
     {
-        if (!$id) {
+        if (! $id) {
             return [];
         }
 
@@ -88,7 +96,7 @@ class SystemAppService extends AbstractService
             $query->where('status', SystemApp::ENABLE)->where('app_id', $params['app_id']);
         });
 
-        if (!$model) {
+        if (! $model) {
             throw new NormalStatusException(t('mineadmin.access_denied'), MineCode::API_AUTH_EXCEPTION);
         }
 
@@ -111,7 +119,7 @@ class SystemAppService extends AbstractService
         unset($params['signature']);
 
         $data = [
-            'sign_ver'   => ApiController::SIGN_VERSION,
+            'sign_ver' => ApiController::SIGN_VERSION,
             'app_secret' => $appSecret,
         ];
 
@@ -130,7 +138,7 @@ class SystemAppService extends AbstractService
             $query->where('app_id', $appId)->where('app_secret', $appSecret);
         }, ['id', 'status']);
 
-        if (!$model) {
+        if (! $model) {
             return MineCode::API_PARAMS_ERROR;
         }
 
@@ -152,7 +160,7 @@ class SystemAppService extends AbstractService
             $query->where('app_id', $appId);
         }, ['id', 'status', 'app_secret']);
 
-        if (!$model) {
+        if (! $model) {
             return MineCode::API_PARAMS_ERROR;
         }
 
@@ -165,7 +173,7 @@ class SystemAppService extends AbstractService
             if ($apiData['app_id'] != $appId) {
                 return MineCode::API_UNBIND_APP;
             }
-        } elseif (!$this->checkAppHasBindApi((int)$model->id, (int)$apiData['id'])) {
+        } elseif (! $this->checkAppHasBindApi((int) $model->id, (int) $apiData['id'])) {
             return MineCode::API_UNBIND_APP;
         }
 
@@ -183,7 +191,7 @@ class SystemAppService extends AbstractService
     public function verifyNormalMode(string $accessToken, array &$apiData): int
     {
         $result = app_verify()->check($accessToken);
-        if (!$result) {
+        if (! $result) {
             return MineCode::API_PARAMS_ERROR;
         }
 
@@ -194,7 +202,7 @@ class SystemAppService extends AbstractService
             if ($apiData['app_id'] != $appInfo['app_id']) {
                 return MineCode::API_UNBIND_APP;
             }
-        } elseif (!$this->checkAppHasBindApi((int)$appInfo['id'], (int)$apiData['id'])) {
+        } elseif (! $this->checkAppHasBindApi((int) $appInfo['id'], (int) $apiData['id'])) {
             return MineCode::API_UNBIND_APP;
         }
 
@@ -217,8 +225,8 @@ class SystemAppService extends AbstractService
     public function checkAppHasBindApi(int $appId, int $apiId): bool
     {
         return Db::table('system_app_api')
-                ->where('app_id', $appId)
-                ->where('api_id', $apiId)
-                ->count() > 0;
+            ->where('app_id', $appId)
+            ->where('api_id', $apiId)
+            ->count() > 0;
     }
 }

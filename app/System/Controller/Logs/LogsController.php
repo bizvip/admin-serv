@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller\Logs;
 
@@ -106,7 +114,7 @@ class LogsController extends MineController
     #[DeleteMapping('deleteQueueLog'), Permission('system:queueLog:delete'), OperationLog]
     public function deleteQueueLog(): ResponseInterface
     {
-        return $this->queueLogService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->queueLogService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -117,7 +125,7 @@ class LogsController extends MineController
     #[DeleteMapping('deleteOperLog'), Permission('system:operLog:delete'), OperationLog]
     public function deleteOperLog(): ResponseInterface
     {
-        return $this->operLogService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->operLogService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -128,7 +136,7 @@ class LogsController extends MineController
     #[DeleteMapping('deleteLoginLog'), Permission('system:loginLog:delete'), OperationLog]
     public function deleteLoginLog(): ResponseInterface
     {
-        return $this->loginLogService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->loginLogService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -139,6 +147,6 @@ class LogsController extends MineController
     #[DeleteMapping('deleteApiLog'), Permission('system:apiLog:delete'), OperationLog]
     public function deleteApiLog(): ResponseInterface
     {
-        return $this->apiLogService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->apiLogService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 }

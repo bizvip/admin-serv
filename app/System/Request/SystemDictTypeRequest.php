@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -47,7 +55,7 @@ class SystemDictTypeRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id'     => 'required',
+            'id' => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +67,9 @@ class SystemDictTypeRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'     => '字典类型ID',
-            'name'   => '字典类型名称',
-            'code'   => '字典类型标识',
+            'id' => '字典类型ID',
+            'name' => '字典类型名称',
+            'code' => '字典类型标识',
             'status' => '字典类型状态',
         ];
     }

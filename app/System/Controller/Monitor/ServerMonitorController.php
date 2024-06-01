@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller\Monitor;
 
@@ -40,10 +48,10 @@ class ServerMonitorController extends MineController
         }
 
         return $this->success([
-            'cpu'    => $this->service->getCpuInfo(),
+            'cpu' => $this->service->getCpuInfo(),
             'memory' => $this->service->getMemInfo(),
             'phpenv' => $this->service->getPhpAndEnvInfo(),
-            'disk'   => $this->service->getDiskInfo(),
+            'disk' => $this->service->getDiskInfo(),
         ]);
     }
 }

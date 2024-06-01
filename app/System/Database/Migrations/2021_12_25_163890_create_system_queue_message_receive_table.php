@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -18,11 +25,11 @@ class CreateSystemQueueMessageReceiveTable extends Migration
             $table->comment('队列消息接收人表');
             $table->addColumn('bigInteger', 'message_id', [
                 'unsigned' => true,
-                'comment'  => '队列消息主键',
+                'comment' => '队列消息主键',
             ]);
             $table->addColumn('bigInteger', 'user_id', [
                 'unsigned' => true,
-                'comment'  => '接收用户主键',
+                'comment' => '接收用户主键',
             ]);
             $table->addColumn('smallInteger', 'read_status', [
                 'default' => 1,

@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -19,7 +26,7 @@ class CreateSystemDictDataTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('bigInteger', 'type_id', [
                 'unsigned' => true,
-                'comment'  => '字典类型ID',
+                'comment' => '字典类型ID',
             ]);
             $table->addColumn('string', 'label', ['length' => 50, 'comment' => '字典标签'])
                 ->nullable();
@@ -29,8 +36,8 @@ class CreateSystemDictDataTable extends Migration
                 ->nullable();
             $table->addColumn('smallInteger', 'sort', [
                 'unsigned' => true,
-                'default'  => 0,
-                'comment'  => '排序',
+                'default' => 0,
+                'comment' => '排序',
             ])->nullable();
             $table->addColumn('smallInteger', 'status', [
                 'default' => 1,
@@ -41,7 +48,7 @@ class CreateSystemDictDataTable extends Migration
             $table->timestamps();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment'   => '删除时间',
+                'comment' => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

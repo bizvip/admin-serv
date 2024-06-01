@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Mapper;
 
@@ -43,7 +51,10 @@ class AutoFromMapper
         string $pageName = 'page',
     ): array {
         $paginate = $this->listQuerySetting($table_id, $params, $isScope)->paginate(
-            (int)($params['pageSize'] ?? 15), ['*'], $pageName, (int)($params[$pageName] ?? 1),
+            (int) ($params['pageSize'] ?? 15),
+            ['*'],
+            $pageName,
+            (int) ($params[$pageName] ?? 1),
         );
 
         return $this->setPaginate($paginate, $params);
@@ -128,11 +139,11 @@ class AutoFromMapper
     public function setPaginate(LengthAwarePaginatorInterface $paginate, array $params = []): array
     {
         return [
-            'items'    => method_exists($this, 'handlePageItems') ? $this->handlePageItems($paginate->items(), $params) : $paginate->items(),
+            'items' => method_exists($this, 'handlePageItems') ? $this->handlePageItems($paginate->items(), $params) : $paginate->items(),
             'pageInfo' => [
-                'total'       => $paginate->total(),
+                'total' => $paginate->total(),
                 'currentPage' => $paginate->currentPage(),
-                'totalPage'   => $paginate->lastPage(),
+                'totalPage' => $paginate->lastPage(),
             ],
         ];
     }
@@ -151,10 +162,10 @@ class AutoFromMapper
         $tree = [];
 
         foreach ($data as $value) {
-            $value = (array)$value;
+            $value = (array) $value;
             if ($value[$parentField] == $parentId) {
-                $child = $this->toTree((array)$data, $value[$id], $id, $parentField, $children);
-                if (!empty($child)) {
+                $child = $this->toTree((array) $data, $value[$id], $id, $parentField, $children);
+                if (! empty($child)) {
                     $value[$children] = $child;
                 }
                 array_push($tree, $value);
@@ -195,9 +206,9 @@ class AutoFromMapper
         string $parentField = 'parent_id',
         string $children = 'children',
     ): array {
-        $params['_mineadmin_tree']     = true;
+        $params['_mineadmin_tree'] = true;
         $params['_mineadmin_tree_pid'] = $parentField;
-        $data                          = $this->listQuerySetting($table_id, $params, $isScope)
+        $data = $this->listQuerySetting($table_id, $params, $isScope)
             ->get();
 
         return $this->toTree($data->toArray(), $data[0]->{$parentField} ?? 0, $id, $parentField, $children);
@@ -209,15 +220,15 @@ class AutoFromMapper
     public function listQuerySetting(mixed $table_id, ?array $params, bool $isScope): Builder
     {
         // 使用Db
-        $table       = SettingGenerateTables::find($table_id);
-        $pkColumn    = SettingGenerateColumns::query()
+        $table = SettingGenerateTables::find($table_id);
+        $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
-        $columns     = SettingGenerateColumns::query()->where('table_id', '=', $table_id)->get();
+        $columns = SettingGenerateColumns::query()->where('table_id', '=', $table_id)->get();
         $columnNames = $columns->pluck('column_name')->toArray();
 
         $pk = '';
-        if (!is_null($pkColumn)) {
+        if (! is_null($pkColumn)) {
             $pk = $pkColumn->column_name;
         }
         $query = Db::table($table->getTableName());
@@ -277,7 +288,8 @@ class AutoFromMapper
                 if ($query_type == 'between') {
                     if (isset($params[$column['column_name']]) && filled($params[$column['column_name']]) && is_array($params[$column['column_name']]) && count($params[$column['column_name']]) == 2) {
                         $query->whereBetween(
-                            $column['column_name'], [
+                            $column['column_name'],
+                            [
                                 $params[$column['column_name']][0],
                                 $params[$column['column_name']][1],
                             ],
@@ -310,7 +322,7 @@ class AutoFromMapper
         bool $removePk = false,
     ): array {
         foreach ($fields as $key => $field) {
-            if (!in_array(trim($field), $columns) && mb_strpos(str_replace('AS', 'as', $field), 'as') === false) {
+            if (! in_array(trim($field), $columns) && mb_strpos(str_replace('AS', 'as', $field), 'as') === false) {
                 unset($fields[$key]);
             } else {
                 $fields[$key] = trim($field);
@@ -333,7 +345,7 @@ class AutoFromMapper
         bool $removePk = false,
     ): void {
         foreach ($data as $name => $val) {
-            if (!in_array($name, $columns)) {
+            if (! in_array($name, $columns)) {
                 unset($data[$name]);
             }
         }
@@ -347,14 +359,14 @@ class AutoFromMapper
      */
     public function save(mixed $table_id, array $data): mixed
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
         if (is_null($pkColumn)) {
             return false;
         }
-        $columns  = SettingGenerateColumns::query()->pluck('column_name')->toArray();
+        $columns = SettingGenerateColumns::query()->pluck('column_name')->toArray();
         $removePk = false;
         if ($pkColumn->column_type == 'bigint' || $pkColumn->column_type) { // 应该是自增， 后续应该 列表里记录 是否为自增
             $removePk = true;
@@ -449,7 +461,7 @@ class AutoFromMapper
      */
     public function update(mixed $table_id, mixed $id, array $data): bool
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
@@ -466,8 +478,8 @@ class AutoFromMapper
         }
 
         return Db::table($table->getTableName())
-                ->where($pkColumn->column_name, '=', $id)
-                ->update($data) > 0;
+            ->where($pkColumn->column_name, '=', $id)
+            ->update($data) > 0;
     }
 
     /**
@@ -475,7 +487,7 @@ class AutoFromMapper
      */
     public function updateByCondition(mixed $table_id, array $condition, array $data): bool
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
@@ -493,7 +505,7 @@ class AutoFromMapper
      */
     public function realDelete(mixed $table_id, array $ids): bool
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
@@ -526,7 +538,7 @@ class AutoFromMapper
      */
     public function disable(mixed $table_id, array $ids, string $field = 'status'): bool
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
@@ -545,7 +557,7 @@ class AutoFromMapper
      */
     public function enable(mixed $table_id, array $ids, string $field = 'status'): bool
     {
-        $table    = SettingGenerateTables::find($table_id);
+        $table = SettingGenerateTables::find($table_id);
         $pkColumn = SettingGenerateColumns::query()
             ->where(['is_pk' => 2, 'table_id' => $table_id])
             ->first();
@@ -566,11 +578,11 @@ class AutoFromMapper
 
     protected function userDataScope($query, ?int $userid = null, $dataScopeField = 'created_by')
     {
-        if (!config('mineadmin.data_scope_enabled')) {
+        if (! config('mineadmin.data_scope_enabled')) {
             return $query;
         }
 
-        $userid = is_null($userid) ? (int)user()->getId() : $userid;
+        $userid = is_null($userid) ? (int) user()->getId() : $userid;
 
         if (empty($userid)) {
             throw new MineException('Data Scope missing user_id');
@@ -600,8 +612,8 @@ class AutoFromMapper
 
             public function __construct(int $userid, Builder $builder, $dataScopeField)
             {
-                $this->userid         = $userid;
-                $this->builder        = $builder;
+                $this->userid = $userid;
+                $this->builder = $builder;
                 $this->dataScopeField = $dataScopeField;
             }
 
@@ -621,7 +633,7 @@ class AutoFromMapper
                  * @phpstan-ignore-next-line
                  */
                 $userModel = SystemUser::find($this->userid, ['id']);
-                $roles     = $userModel->roles()->get(['id', 'data_scope']);
+                $roles = $userModel->roles()->get(['id', 'data_scope']);
 
                 foreach ($roles as $role) {
                     switch ($role->data_scope) {
@@ -630,26 +642,28 @@ class AutoFromMapper
                             break 2;
                         case SystemRole::CUSTOM_SCOPE:
                             // 自定义数据权限
-                            $deptIds         = $role->depts()->pluck('id')->toArray();
-                            $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
-                                ->whereIn('dept_id', $deptIds)
-                                ->pluck('user_id')
-                                ->toArray(),
+                            $deptIds = $role->depts()->pluck('id')->toArray();
+                            $this->userIds = array_merge(
+                                $this->userIds,
+                                Db::table('system_user_dept')
+                                    ->whereIn('dept_id', $deptIds)
+                                    ->pluck('user_id')
+                                    ->toArray(),
                             );
                             $this->userIds[] = $this->userid;
                             break;
                         case SystemRole::SELF_DEPT_SCOPE:
                             // 本部门数据权限
-                            $deptIds         = Db::table('system_user_dept')
+                            $deptIds = Db::table('system_user_dept')
                                 ->where('user_id', $userModel->id)
                                 ->pluck('dept_id')
                                 ->toArray();
-                            $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
-                                ->whereIn('dept_id', $deptIds)
-                                ->pluck('user_id')
-                                ->toArray(),
+                            $this->userIds = array_merge(
+                                $this->userIds,
+                                Db::table('system_user_dept')
+                                    ->whereIn('dept_id', $deptIds)
+                                    ->pluck('user_id')
+                                    ->toArray(),
                             );
                             $this->userIds[] = $this->userid;
                             break;
@@ -659,22 +673,24 @@ class AutoFromMapper
                                 ->where('user_id', $userModel->id)
                                 ->pluck('dept_id')
                                 ->toArray();
-                            $ids         = [];
+                            $ids = [];
                             foreach ($parentDepts as $deptId) {
-                                $ids[] = SystemDept::query()->where(function ($query) use ($deptId,
-                                    ) {
-                                        $query->where('id', '=', $deptId)
-                                            ->orWhere('level', 'like', $deptId . ',%')
-                                            ->orWhere('level', 'like', '%,' . $deptId)
-                                            ->orWhere('level', 'like', '%,' . $deptId . ',%');
-                                    })->pluck('id')->toArray();
+                                $ids[] = SystemDept::query()->where(function ($query) use (
+                                    $deptId,
+                                ) {
+                                    $query->where('id', '=', $deptId)
+                                        ->orWhere('level', 'like', $deptId . ',%')
+                                        ->orWhere('level', 'like', '%,' . $deptId)
+                                        ->orWhere('level', 'like', '%,' . $deptId . ',%');
+                                })->pluck('id')->toArray();
                             }
-                            $deptIds         = array_merge($parentDepts, ...$ids);
-                            $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
-                                ->whereIn('dept_id', $deptIds)
-                                ->pluck('user_id')
-                                ->toArray(),
+                            $deptIds = array_merge($parentDepts, ...$ids);
+                            $this->userIds = array_merge(
+                                $this->userIds,
+                                Db::table('system_user_dept')
+                                    ->whereIn('dept_id', $deptIds)
+                                    ->pluck('user_id')
+                                    ->toArray(),
                             );
                             $this->userIds[] = $this->userid;
                             break;
@@ -683,15 +699,16 @@ class AutoFromMapper
                                 ->where('user_id', $userModel->id)
                                 ->pluck('dept_id')
                                 ->toArray();
-                            $ids         = [];
+                            $ids = [];
                             foreach ($parentDepts as $deptId) {
-                                $ids[] = SystemDept::query()->where(function ($query) use ($deptId,
-                                    ) {
-                                        $query->where('id', '=', $deptId)
-                                            ->orWhere('level', 'like', $deptId . ',%')
-                                            ->orWhere('level', 'like', '%,' . $deptId)
-                                            ->orWhere('level', 'like', '%,' . $deptId . ',%');
-                                    })->pluck('id')->toArray();
+                                $ids[] = SystemDept::query()->where(function ($query) use (
+                                    $deptId,
+                                ) {
+                                    $query->where('id', '=', $deptId)
+                                        ->orWhere('level', 'like', $deptId . ',%')
+                                        ->orWhere('level', 'like', '%,' . $deptId)
+                                        ->orWhere('level', 'like', '%,' . $deptId . ',%');
+                                })->pluck('id')->toArray();
                             }
                             $deptIds = array_merge($parentDepts, ...$ids);
 
@@ -701,7 +718,7 @@ class AutoFromMapper
                             //                            }
 
                             $this->builder = $this->builder->whereIn('dept_id', $deptIds);
-                        // no break
+                            // no break
                         case SystemRole::SELF_SCOPE:
                             $this->userIds[] = $this->userid;
                             break;

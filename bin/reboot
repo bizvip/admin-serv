@@ -32,7 +32,7 @@ function startService($env): void
 function killHyperfPid(): void
 {
     echo "执行killHyperfPid中\n";
-    $pid       = shell_exec(sprintf('cat %s/../runtime/hyperf.pid', __DIR__));
+    $pid       = shell_exec(sprintf('cat %s/../runtime/avx-admin-serv.pid', __DIR__));
     $rebootCmd = sprintf('rm -rf %s/../runtime/container/*', __DIR__);
     //    $rebootCmd = sprintf('rm -rf %s/../runtime/container/* && php %s/run start > /dev/null 2>/dev/null &', __DIR__, __DIR__);
 

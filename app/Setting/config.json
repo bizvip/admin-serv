@@ -1,7 +1,7 @@
 {
     "name": "Setting",
     "label": "设置模块",
-    "description": "MineAdmin核心、内置模块，主要功能面向开发者",
+    "description": "核心内置模块，主要功能面向开发者",
     "installed": true,
     "enabled": true,
     "version": "1.0.0",

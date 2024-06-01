@@ -27,7 +27,7 @@ const ENTRY_POINT_FILE = __DIR__ . '/bin/run';
 # Start Command 启动命令
 const START_COMMAND = [ENTRY_POINT_FILE, 'start'];
 # PID File Path PID文件路径
-const PID_FILE_PATH = __DIR__ . '/runtime/hyperf.pid';
+const PID_FILE_PATH = __DIR__ . '/runtime/avx-admin-serv.pid';
 # Scan Interval 扫描间隔（毫秒，默认2000）
 const SCAN_INTERVAL = 2000;
 # Console Color 控制台颜色

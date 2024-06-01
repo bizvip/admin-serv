@@ -24,7 +24,7 @@ class MessageProducer extends ProducerMessage
     {
         console()->info(
             sprintf(
-                'MineAdmin created queue message time at: %s, data is: %s', date('Y-m-d H:i:s'), (is_array($data) || is_object($data)) ? json_encode($data) : $data,
+                'created queue message time at: %s, data is: %s', date('Y-m-d H:i:s'), (is_array($data) || is_object($data)) ? json_encode($data) : $data,
             ),
         );
 

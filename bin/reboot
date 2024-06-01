@@ -1,0 +1,93 @@
+#!/usr/bin/env php
+<?php
+
+
+declare(strict_types=1);
+/*
+ * 强制重启服务脚本，并清理缓存代理类
+ */
+$env = $argv[1] ?? 'dev';
+
+$httpPort    = $argv[2] ?? 9501;
+$messagePort = $argv[3] ?? 9502;
+
+killHyperfPid();
+killHttpPort($httpPort);
+killWebsocketPort($messagePort);
+
+startService($env);
+
+function startService($env): void
+{
+    echo "启动{$env}服务\n";
+    if ($env == 'dev') {
+        $rebootCmd = sprintf('php %s/run server:watch  > /dev/tty', __DIR__);
+        shell_exec($rebootCmd);
+    } else {
+        $rebootCmd = sprintf('php %s/run start > /dev/null', __DIR__);
+        shell_exec($rebootCmd);
+    }
+}
+
+function killHyperfPid(): void
+{
+    echo "执行killHyperfPid中\n";
+    $pid       = shell_exec(sprintf('cat %s/../runtime/hyperf.pid', __DIR__));
+    $rebootCmd = sprintf('rm -rf %s/../runtime/container/*', __DIR__);
+    //    $rebootCmd = sprintf('rm -rf %s/../runtime/container/* && php %s/run start > /dev/null 2>/dev/null &', __DIR__, __DIR__);
+
+    if (shell_exec(sprintf('ps -ef | grep -v grep | grep %s', $pid))) {
+        shell_exec("kill -9 {$pid}");
+    }
+    echo "执行killHyperfPid完成\n";
+
+    echo "执行清理缓存代理中\n";
+    shell_exec($rebootCmd);
+    echo "执行清理缓存代理成功\n";
+}
+
+function killWebsocketPort($port = 9502): void
+{
+    echo "执行killWebsocketPort中\n";
+
+    $command = 'lsof -t -i:' . $port;
+    $output  = shell_exec($command);
+
+    if ($output) {
+        $pidArray = explode("\n", trim($output));
+
+        $pidList = array_filter($pidArray, 'strlen');
+
+        foreach ($pidList as $pid) {
+            if (is_numeric($pid)) {
+                shell_exec("kill -9 {$pid}");
+                echo __FUNCTION__ . ":{$port}端口进程 {$pid} 已杀死\n";
+            }
+        }
+    }
+
+    echo "执行killWebsocketPort完成\n";
+}
+
+function killHttpPort($port = 9501): void
+{
+    echo "执行killHttpPort中\n";
+
+    $command = 'lsof -t -i:' . $port;
+    $output  = shell_exec($command);
+
+    if ($output) {
+        $pidArray = explode("\n", trim($output));
+
+        $pidList = array_filter($pidArray, 'strlen');
+
+        foreach ($pidList as $pid) {
+            if (is_numeric($pid)) {
+                shell_exec("kill -9 {$pid}");
+                echo __FUNCTION__ . ":{$port}端口进程 {$pid} 已杀死\n";
+            }
+        }
+    }
+
+    echo "执行killHttpPort完成\n";
+}

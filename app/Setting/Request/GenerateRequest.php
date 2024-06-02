@@ -22,21 +22,21 @@ class GenerateRequest extends MineFormRequest
     public function updateRules(): array
     {
         return [
-            'id' => 'required',
-            'generate_type' => 'required',
-            'build_menu' => 'required',
+            'id'             => 'required',
+            'generate_type'  => 'required',
+            'build_menu'     => 'required',
             'generate_menus' => 'array',
-            'menu_name' => 'required',
-            'module_name' => 'required',
-            'table_comment' => 'required',
-            'table_name' => 'required',
-            'type' => 'required',
+            'menu_name'      => 'required',
+            'module_name'    => 'required',
+            'table_comment'  => 'required',
+            'table_name'     => 'required',
+            'type'           => 'required',
             'component_type' => 'required',
-            'columns' => 'required|array',
-            'package_name' => '',
+            'columns'        => 'required|array',
+            'package_name'   => '',
             'belong_menu_id' => '',
-            'options' => '',
-            'remark' => '',
+            'options'        => '',
+            'remark'         => '',
         ];
     }
 
@@ -44,7 +44,7 @@ class GenerateRequest extends MineFormRequest
     {
         return [
             'source' => 'required',
-            'names' => 'required|array',
+            'names'  => 'required|array',
         ];
     }
 
@@ -55,19 +55,19 @@ class GenerateRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '业务表ID',
-            'source' => '数据源',
-            'generate_type' => '生成类型',
-            'build_menu' => '是否构建菜单',
+            'id'             => '业务表ID',
+            'source'         => '数据源',
+            'generate_type'  => '生成类型',
+            'build_menu'     => '是否构建菜单',
             'generate_menus' => '生成菜单列表',
-            'menu_name' => '菜单名称',
-            'module_name' => '模块名称',
-            'table_comment' => '业务表说明',
-            'table_name' => '业务表名称',
-            'type' => '生成类型',
+            'menu_name'      => '菜单名称',
+            'module_name'    => '模块名称',
+            'table_comment'  => '业务表说明',
+            'table_name'     => '业务表名称',
+            'type'           => '生成类型',
             'component_type' => '组件类型',
-            'columns' => '字段列表',
-            'names' => '业务表名称组',
+            'columns'        => '字段列表',
+            'names'          => '业务表名称组',
         ];
     }
 }

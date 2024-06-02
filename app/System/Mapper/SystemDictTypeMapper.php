@@ -20,7 +20,7 @@ class SystemDictTypeMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemDictType::class;
     }

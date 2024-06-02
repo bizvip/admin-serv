@@ -22,7 +22,7 @@ class SystemUserMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemUser::class;
     }
@@ -83,10 +83,10 @@ class SystemUserMapper extends AbstractMapper
         $this->filterExecuteAttributes($data, true);
 
         $result = parent::update($id, $data);
-        $user = $this->model::find($id);
+        $user   = $this->model::find($id);
         if ($user && $result) {
-            ! empty($role_ids) && $user->roles()->sync($role_ids);
-            ! empty($dept_ids) && $user->depts()->sync($dept_ids);
+            !empty($role_ids) && $user->roles()->sync($role_ids);
+            !empty($dept_ids) && $user->depts()->sync($dept_ids);
             $user->posts()->sync($post_ids);
 
             return true;
@@ -141,7 +141,7 @@ class SystemUserMapper extends AbstractMapper
                     ->orWhere('level', 'like', '%,' . $params['dept_id'])
                     ->orWhere('level', 'like', '%,' . $params['dept_id'] . ',%');
             })->pluck('id')->toArray();
-            $query->whereHas('depts', fn ($query) => $query->whereIn('id', $deptIds));
+            $query->whereHas('depts', fn($query) => $query->whereIn('id', $deptIds));
         }
         if (isset($params['username']) && filled($params['username'])) {
             $query->where('username', 'like', '%' . $params['username'] . '%');
@@ -165,8 +165,7 @@ class SystemUserMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at',
-                [
+                'created_at', [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],
@@ -193,16 +192,14 @@ class SystemUserMapper extends AbstractMapper
         if (isset($params['role_id']) && filled($params['role_id'])) {
             $tablePrefix = env('DB_PREFIX');
             $query->whereRaw(
-                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_role WHERE role_id = ? )",
-                [$params['role_id']],
+                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_role WHERE role_id = ? )", [$params['role_id']],
             );
         }
 
         if (isset($params['post_id']) && filled($params['post_id'])) {
             $tablePrefix = env('DB_PREFIX');
             $query->whereRaw(
-                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_post WHERE post_id = ? )",
-                [$params['post_id']],
+                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_post WHERE post_id = ? )", [$params['post_id']],
             );
         }
 
@@ -229,7 +226,7 @@ class SystemUserMapper extends AbstractMapper
      */
     public function getUserInfoByIds(array $ids, ?array $select = null): array
     {
-        if (! $select) {
+        if (!$select) {
             $select = ['id', 'username', 'nickname', 'phone', 'email', 'created_at'];
         }
 

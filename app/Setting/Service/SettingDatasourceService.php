@@ -33,7 +33,7 @@ class SettingDatasourceService extends AbstractService
      */
     public function testLink(array $params): bool
     {
-        return (bool) $this->mapper->getDataSourceTableList($this->read((int) $params['id'] ?? null));
+        return (bool)$this->mapper->getDataSourceTableList($this->read((int)$params['id'] ?? null));
     }
 
     /**
@@ -90,7 +90,7 @@ class SettingDatasourceService extends AbstractService
     {
         $tables = [];
         foreach ($data as $item) {
-            $tables[] = array_change_key_case((array) $item);
+            $tables[] = array_change_key_case((array)$item);
         }
 
         return $tables;
@@ -107,6 +107,6 @@ class SettingDatasourceService extends AbstractService
             return [];
         }
 
-        return $this->mapper->getDataSourceTableList($this->read((int) $params['id']));
+        return $this->mapper->getDataSourceTableList($this->read((int)$params['id']));
     }
 }

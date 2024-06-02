@@ -47,7 +47,7 @@ class SystemDictTypeRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +59,9 @@ class SystemDictTypeRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '字典类型ID',
-            'name' => '字典类型名称',
-            'code' => '字典类型标识',
+            'id'     => '字典类型ID',
+            'name'   => '字典类型名称',
+            'code'   => '字典类型标识',
             'status' => '字典类型状态',
         ];
     }

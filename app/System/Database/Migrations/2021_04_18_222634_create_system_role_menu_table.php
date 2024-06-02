@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -17,11 +18,11 @@ class CreateSystemRoleMenuTable extends Migration
             $table->comment('角色与菜单关联表');
             $table->addColumn('bigInteger', 'role_id', [
                 'unsigned' => true,
-                'comment' => '角色主键',
+                'comment'  => '角色主键',
             ]);
             $table->addColumn('bigInteger', 'menu_id', [
                 'unsigned' => true,
-                'comment' => '菜单主键',
+                'comment'  => '菜单主键',
             ]);
             $table->primary(['role_id', 'menu_id']);
         });

@@ -40,10 +40,10 @@ class ServerMonitorController extends MineController
         }
 
         return $this->success([
-            'cpu' => $this->service->getCpuInfo(),
+            'cpu'    => $this->service->getCpuInfo(),
             'memory' => $this->service->getMemInfo(),
             'phpenv' => $this->service->getPhpAndEnvInfo(),
-            'disk' => $this->service->getDiskInfo(),
+            'disk'   => $this->service->getDiskInfo(),
         ]);
     }
 }

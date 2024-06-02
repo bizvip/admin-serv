@@ -57,11 +57,11 @@ class SettingGenerateTablesService extends AbstractService
         ContainerInterface $container,
         private readonly ValidatorFactory $validatorFactory,
     ) {
-        $this->mapper = $mapper;
-        $this->dataMaintainService = $dataMaintainService;
+        $this->mapper                        = $mapper;
+        $this->dataMaintainService           = $dataMaintainService;
         $this->settingGenerateColumnsService = $settingGenerateColumnsService;
-        $this->moduleService = $moduleService;
-        $this->container = $container;
+        $this->moduleService                 = $moduleService;
+        $this->container                     = $container;
     }
 
     /**
@@ -75,30 +75,29 @@ class SettingGenerateTablesService extends AbstractService
         // 非系统数据源，同步远程库的表结构到本地
         if ($params['source'] !== Mine::getMineName()) {
             foreach ($params['names'] as $sourceName => $item) {
-                if (! Schema::hasTable($item['name'])) {
+                if (!Schema::hasTable($item['name'])) {
                     $this->container->get(SettingDatasourceService::class)
-                        ->syncRemoteTableStructToLocal((int) $params['source'], $item);
+                        ->syncRemoteTableStructToLocal((int)$params['source'], $item);
                 }
             }
         }
-        if (! is_array($params['names'][0] ?? null)) {
+        if (!is_array($params['names'][0] ?? null)) {
             throw new MineException(t('setting.names_type_error'));
         }
         foreach ($params['names'] as $item) {
             $this->validatorFactory->validate(
-                data: $item,
-                rules: [
-                    'name' => 'required|string',
+                data: $item, rules: [
+                    'name'    => 'required|string',
                     'comment' => 'required|string',
                 ],
             );
             $tableInfo = [
-                'table_name' => env('DB_PREFIX') ? str_replace(env('DB_PREFIX'), '', $item['name']) : $item['name'],
+                'table_name'    => env('DB_PREFIX') ? str_replace(env('DB_PREFIX'), '', $item['name']) : $item['name'],
                 'table_comment' => $item['comment'],
-                'menu_name' => $item['comment'],
-                'type' => 'single',
+                'menu_name'     => $item['comment'],
+                'type'          => 'single',
             ];
-            $id = $this->save($tableInfo);
+            $id        = $this->save($tableInfo);
 
             $columns = $this->dataMaintainService->getColumnList($item['name']);
 
@@ -117,12 +116,12 @@ class SettingGenerateTablesService extends AbstractService
     #[Transaction]
     public function sync(mixed $id): bool
     {
-        $table = $this->read($id);
+        $table   = $this->read($id);
         $columns = $this->dataMaintainService->getColumnList(
             str_replace(env('DB_PREFIX'), '', $table['table_name']),
         );
-        $model = $this->settingGenerateColumnsService->mapper->getModel();
-        $ids = $model->newQuery()->where('table_id', $table['id'])->pluck('id');
+        $model   = $this->settingGenerateColumnsService->mapper->getModel();
+        $ids     = $model->newQuery()->where('table_id', $table['id'])->pluck('id');
 
         $this->settingGenerateColumnsService->mapper->delete($ids->toArray());
         foreach ($columns as &$column) {
@@ -139,19 +138,19 @@ class SettingGenerateTablesService extends AbstractService
     #[Transaction]
     public function updateTableAndColumns(array $data): bool
     {
-        $id = $data['id'];
+        $id      = $data['id'];
         $columns = $data['columns'];
 
         unset($data['columns']);
 
-        if (! empty($data['belong_menu_id'])) {
+        if (!empty($data['belong_menu_id'])) {
             $data['belong_menu_id'] = is_array($data['belong_menu_id']) ? array_pop($data['belong_menu_id']) : $data['belong_menu_id'];
         } else {
             $data['belong_menu_id'] = 0;
         }
 
-        $data['package_name'] = empty($data['package_name']) ? null : ucfirst($data['package_name']);
-        $data['namespace'] = "App\\{$data['module_name']}";
+        $data['package_name']   = empty($data['package_name']) ? null : ucfirst($data['package_name']);
+        $data['namespace']      = "App\\{$data['module_name']}";
         $data['generate_menus'] = implode(',', $data['generate_menus']);
 
         if (empty($data['options'])) {
@@ -179,7 +178,7 @@ class SettingGenerateTablesService extends AbstractService
         $this->initGenerateSetting();
         $adminId = user()->getId();
         foreach ($ids as $id) {
-            $this->generateCodeFile((int) $id, $adminId);
+            $this->generateCodeFile((int)$id, $adminId);
         }
 
         return $this->packageCodeFile();
@@ -198,9 +197,7 @@ class SettingGenerateTablesService extends AbstractService
                 $path = sprintf('%s/app/%s/Model/*', BASE_PATH, $item['name']);
                 foreach (glob($path) as $file) {
                     $models[] = sprintf(
-                        '\App\%s\Model\%s',
-                        $item['name'],
-                        str_replace('.php', '', basename($file)),
+                        '\App\%s\Model\%s', $item['name'], str_replace('.php', '', basename($file)),
                     );
                 }
             }
@@ -225,59 +222,59 @@ class SettingGenerateTablesService extends AbstractService
         return [
             [
                 'tab_name' => 'Controller.php',
-                'name' => 'controller',
-                'code' => make(ControllerGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'controller',
+                'code'     => make(ControllerGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Model.php',
-                'name' => 'model',
-                'code' => make(ModelGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'model',
+                'code'     => make(ModelGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Service.php',
-                'name' => 'service',
-                'code' => make(ServiceGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'service',
+                'code'     => make(ServiceGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Mapper.php',
-                'name' => 'mapper',
-                'code' => make(MapperGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'mapper',
+                'code'     => make(MapperGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Request.php',
-                'name' => 'request',
-                'code' => make(RequestGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'request',
+                'code'     => make(RequestGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Dto.php',
-                'name' => 'dto',
-                'code' => make(DtoGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'php',
+                'name'     => 'dto',
+                'code'     => make(DtoGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'php',
             ],
             [
                 'tab_name' => 'Api.js',
-                'name' => 'api',
-                'code' => make(ApiGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'javascript',
+                'name'     => 'api',
+                'code'     => make(ApiGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'javascript',
             ],
             [
                 'tab_name' => 'Index.vue',
-                'name' => 'index',
-                'code' => make(VueIndexGenerator::class)->setGenInfo($model)->preview(),
-                'lang' => 'html',
+                'name'     => 'index',
+                'code'     => make(VueIndexGenerator::class)->setGenInfo($model)->preview(),
+                'lang'     => 'html',
             ],
             [
                 'tab_name' => 'Menu.sql',
-                'name' => 'sql',
-                'code' => make(SqlGenerator::class)
+                'name'     => 'sql',
+                'code'     => make(SqlGenerator::class)
                     ->setGenInfo($model, user()->getId())
                     ->preview(),
-                'lang' => 'mysql',
+                'lang'     => 'mysql',
             ],
         ];
     }
@@ -324,9 +321,9 @@ class SettingGenerateTablesService extends AbstractService
      */
     protected function packageCodeFile(): string
     {
-        $fs = $this->container->get(Filesystem::class);
+        $fs          = $this->container->get(Filesystem::class);
         $zipFileName = BASE_PATH . '/runtime/mineadmin.zip';
-        $path = BASE_PATH . '/runtime/generate';
+        $path        = BASE_PATH . '/runtime/generate';
         // 删除老的压缩包
         @unlink($zipFileName);
         $archive = new \ZipArchive();
@@ -334,8 +331,7 @@ class SettingGenerateTablesService extends AbstractService
         $files = $fs->files($path);
         foreach ($files as $file) {
             $archive->addFile(
-                $path . '/' . $file->getFilename(),
-                $file->getFilename(),
+                $path . '/' . $file->getFilename(), $file->getFilename(),
             );
         }
         $this->addZipFile($archive, $path);
@@ -353,11 +349,8 @@ class SettingGenerateTablesService extends AbstractService
                 $files = $fs->files($directory);
                 foreach ($files as $file) {
                     $archive->addFile(
-                        $directory . '/' . $file->getFilename(),
-                        str_replace(
-                            BASE_PATH . '/runtime/generate/',
-                            '',
-                            $directory,
+                        $directory . '/' . $file->getFilename(), str_replace(
+                            BASE_PATH . '/runtime/generate/', '', $directory,
                         ) . '/' . $file->getFilename(),
                     );
                 }
@@ -375,7 +368,7 @@ class SettingGenerateTablesService extends AbstractService
     {
         // 设置生成目录
         $genDirectory = BASE_PATH . '/runtime/generate';
-        $fs = $this->container->get(Filesystem::class);
+        $fs           = $this->container->get(Filesystem::class);
 
         // 先删除再创建
         $fs->cleanDirectory($genDirectory);

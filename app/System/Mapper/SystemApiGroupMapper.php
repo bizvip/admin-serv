@@ -19,7 +19,7 @@ class SystemApiGroupMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemApiGroup::class;
     }

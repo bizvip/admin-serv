@@ -37,7 +37,7 @@ class SystemUploadFileService extends AbstractService
 
     public function __construct(SystemUploadFileMapper $mapper, MineUpload $mineUpload)
     {
-        $this->mapper = $mapper;
+        $this->mapper     = $mapper;
         $this->mineUpload = $mineUpload;
     }
 
@@ -94,7 +94,7 @@ class SystemUploadFileService extends AbstractService
     public function saveNetworkImage(array $data): array
     {
         $data = $this->mineUpload->handleSaveNetworkImage($data);
-        if (! isset($data['id']) && $this->save($data)) {
+        if (!isset($data['id']) && $this->save($data)) {
             return $data;
         }
 
@@ -117,15 +117,14 @@ class SystemUploadFileService extends AbstractService
     public function responseFile(string $hash): ResponseInterface
     {
         $model = $this->readByHash($hash, ['url', 'mime_type']);
-        if (! $model) {
+        if (!$model) {
             throw new NormalStatusException('文件不存在', 500);
         }
 
         return container()->get(MineResponse::class)->responseImage(
             $this->mineUpload->getFileSystem()->read(
                 $this->mineUpload->getStorageMode() === '1' ? str_replace(env('UPLOAD_PATH', 'uploadfile'), '', $model->url) : $model->url,
-            ),
-            $model->mime_type,
+            ), $model->mime_type,
         );
     }
 

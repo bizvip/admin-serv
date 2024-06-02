@@ -45,7 +45,7 @@ class SystemApiGroupRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -57,8 +57,8 @@ class SystemApiGroupRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '组ID',
-            'name' => '组名称',
+            'id'     => '组ID',
+            'name'   => '组名称',
             'status' => '组状态',
         ];
     }

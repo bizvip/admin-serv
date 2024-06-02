@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -19,7 +20,7 @@ class CreateSystemApiLogTable extends Migration
             $table->addColumn('bigInteger', 'api_id', ['unsigned' => true, 'comment' => 'api ID']);
             $table->addColumn('string', 'api_name', ['length' => 32, 'comment' => '接口名称']);
             $table->addColumn('string', 'access_name', [
-                'length' => 64,
+                'length'  => 64,
                 'comment' => '接口访问名称',
             ]);
             $table->addColumn('text', 'request_data', ['comment' => '请求数据'])->nullable();
@@ -31,7 +32,7 @@ class CreateSystemApiLogTable extends Migration
                 ->nullable();
             $table->addColumn('timestamp', 'access_time', [
                 'precision' => 0,
-                'comment' => '访问时间',
+                'comment'   => '访问时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

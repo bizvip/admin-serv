@@ -66,8 +66,8 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
     {
         try {
             $migrateCommand = ['command' => 'mine:migrate-run', 'name' => $name];
-            $seedCommand = ['command' => 'mine:seeder-run', 'name' => $name];
-            $application = container()->get(ApplicationInterface::class);
+            $seedCommand    = ['command' => 'mine:seeder-run', 'name' => $name];
+            $application    = container()->get(ApplicationInterface::class);
             $application->setAutoExit(false);
             $application->run(new ArrayInput($migrateCommand), new NullOutput());
             $application->run(new ArrayInput($seedCommand), new NullOutput());
@@ -91,7 +91,7 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
     {
         try {
             $migrate = container()->get(Migrator::class);
-            $path = BASE_PATH . '/app/' . $name . '/Database/Migrations';
+            $path    = BASE_PATH . '/app/' . $name . '/Database/Migrations';
             $migrate->rollback([$path]);
             is_dir($path . '/Update') && $migrate->rollback([$path . '/Update']);
             $this->deleteModule($name);
@@ -120,7 +120,7 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
     /**
      * 缓存模块信息.
      * @param null|string $moduleName 模块名
-     * @param array $data 模块数据
+     * @param array       $data       模块数据
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -129,7 +129,7 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
         $key = $this->prefix . 'modules';
         $this->mine->scanModule();
         $modules = $this->mine->getModuleInfo();
-        if (! empty($moduleName)) {
+        if (!empty($moduleName)) {
             $modules[$moduleName] = $data;
         }
         redis()->set($key, serialize($modules));
@@ -142,12 +142,12 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
      */
     public function getModuleCache(?string $moduleName = null): array
     {
-        $key = $this->prefix . 'modules';
+        $key   = $this->prefix . 'modules';
         $redis = redis();
         if ($data = $redis->get($key)) {
             $data = unserialize($data);
 
-            return ! empty($moduleName) && isset($data[$moduleName]) ? $data[$moduleName] : $data;
+            return !empty($moduleName) && isset($data[$moduleName]) ? $data[$moduleName] : $data;
         }
         $this->setModuleCache();
         $this->mine->scanModule();
@@ -165,13 +165,11 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
         $modules = make(Mine::class)->getModuleInfo();
         if (isset($modules[$data['name']])) {
             $filePath = BASE_PATH . '/app/' . $data['name'] . '/config.json';
-            $status = $data['status'] ? 'true' : 'false';
-            $content = preg_replace(
-                '/\"enabled\":\s(true|false),/',
-                '"enabled": ' . $status . ',',
-                file_get_contents($filePath),
+            $status   = $data['status'] ? 'true' : 'false';
+            $content  = preg_replace(
+                '/\"enabled\":\s(true|false),/', '"enabled": ' . $status . ',', file_get_contents($filePath),
             );
-            $result = (bool) file_put_contents($filePath, $content);
+            $result   = (bool)file_put_contents($filePath, $content);
             $this->setModuleCache();
 
             return $result;

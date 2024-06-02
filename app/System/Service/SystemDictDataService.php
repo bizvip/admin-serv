@@ -34,12 +34,12 @@ class SystemDictDataService extends AbstractService implements DictDataServiceIn
      */
     public function getLists(?array $params = null): array
     {
-        if (! isset($params['codes'])) {
+        if (!isset($params['codes'])) {
             return [];
         }
 
         $codes = explode(',', $params['codes']);
-        $data = [];
+        $data  = [];
 
         foreach ($codes as $code) {
             $data[$code] = $this->getList(['code' => $code]);
@@ -55,9 +55,9 @@ class SystemDictDataService extends AbstractService implements DictDataServiceIn
     public function getList(?array $params = null, bool $isScope = false): array
     {
         $args = [
-            'select' => ['id', 'label as title', 'value as key'],
-            'status' => MineModel::ENABLE,
-            'orderBy' => 'sort',
+            'select'    => ['id', 'label as title', 'value as key'],
+            'status'    => MineModel::ENABLE,
+            'orderBy'   => 'sort',
             'orderType' => 'desc',
         ];
 

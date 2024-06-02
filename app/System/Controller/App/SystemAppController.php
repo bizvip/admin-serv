@@ -77,7 +77,7 @@ class SystemAppController extends MineController
     #[GetMapping('getApiList')]
     public function getApiList(): ResponseInterface
     {
-        return $this->success($this->service->getApiList((int) $this->request->input('id', null)));
+        return $this->success($this->service->getApiList((int)$this->request->input('id', null)));
     }
 
     /**
@@ -143,7 +143,7 @@ class SystemAppController extends MineController
     #[DeleteMapping('delete'), Permission('system:app:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -154,7 +154,7 @@ class SystemAppController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:app:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -165,7 +165,7 @@ class SystemAppController extends MineController
     #[PutMapping('recovery'), Permission('system:app:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -176,7 +176,7 @@ class SystemAppController extends MineController
     #[PutMapping('changeStatus'), Permission('system:apiGroup:update'), OperationLog]
     public function changeStatus(SystemAppRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $this->request->input('id'), (string) $this->request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$this->request->input('id'), (string)$this->request->input('status')) ? $this->success() : $this->error();
     }
 
     /**

@@ -93,7 +93,7 @@ class SettingDatasourceController extends MineController
     #[DeleteMapping('delete'), Permission('setting:datasource:delete'), OperationLog]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

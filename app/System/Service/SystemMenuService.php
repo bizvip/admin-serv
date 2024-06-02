@@ -102,8 +102,7 @@ class SystemMenuService extends AbstractService implements MenuServiceInterface
         foreach ($buttonMenus as $button) {
             $this->save(
                 array_merge(
-                    ['parent_id' => $model->id, 'type' => SystemMenu::BUTTON],
-                    $button,
+                    ['parent_id' => $model->id, 'type' => SystemMenu::BUTTON], $button,
                 ),
             );
         }
@@ -128,7 +127,7 @@ class SystemMenuService extends AbstractService implements MenuServiceInterface
         $ctuIds = [];
         if (count($ids)) {
             foreach ($ids as $id) {
-                if (! $this->checkChildrenExists((int) $id)) {
+                if (!$this->checkChildrenExists((int)$id)) {
                     $this->mapper->realDelete([$id]);
                 } else {
                     $ctuIds[] = $id;
@@ -153,11 +152,11 @@ class SystemMenuService extends AbstractService implements MenuServiceInterface
     protected function handleData(array $data): array
     {
         if (empty($data['parent_id']) || $data['parent_id'] == 0) {
-            $data['level'] = '0';
+            $data['level']     = '0';
             $data['parent_id'] = 0;
-            $data['type'] = $data['type'] === SystemMenu::BUTTON ? SystemMenu::MENUS_LIST : $data['type'];
+            $data['type']      = $data['type'] === SystemMenu::BUTTON ? SystemMenu::MENUS_LIST : $data['type'];
         } else {
-            $parentMenu = $this->mapper->read((int) $data['parent_id']);
+            $parentMenu    = $this->mapper->read((int)$data['parent_id']);
             $data['level'] = $parentMenu['level'] . ',' . $parentMenu['id'];
         }
 

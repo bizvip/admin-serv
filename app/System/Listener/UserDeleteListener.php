@@ -32,9 +32,9 @@ class UserDeleteListener implements ListenerInterface
      */
     public function process(object $event): void
     {
-        $redis = redis();
+        $redis  = redis();
         $prefix = config('cache.default.prefix') . 'Token:';
-        $user = user();
+        $user   = user();
 
         /* @var $event UserDelete */
         foreach ($event->ids as $uid) {

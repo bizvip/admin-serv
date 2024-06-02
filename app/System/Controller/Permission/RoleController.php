@@ -140,7 +140,7 @@ class RoleController extends MineController
     #[DeleteMapping('delete'), Permission('system:role:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -151,7 +151,7 @@ class RoleController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:role:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -162,7 +162,7 @@ class RoleController extends MineController
     #[PutMapping('recovery'), Permission('system:role:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -173,7 +173,7 @@ class RoleController extends MineController
     #[PutMapping('changeStatus'), Permission('system:role:changeStatus'), OperationLog]
     public function changeStatus(SystemRoleRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $request->input('id'), (string) $request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$request->input('id'), (string)$request->input('status')) ? $this->success() : $this->error();
     }
 
     /**
@@ -185,9 +185,7 @@ class RoleController extends MineController
     public function numberOperation(): ResponseInterface
     {
         return $this->service->numberOperation(
-            (int) $this->request->input('id'),
-            (string) $this->request->input('numberName'),
-            (int) $this->request->input('numberValue', 1),
+            (int)$this->request->input('id'), (string)$this->request->input('numberName'), (int)$this->request->input('numberValue', 1),
         ) ? $this->success() : $this->error();
     }
 

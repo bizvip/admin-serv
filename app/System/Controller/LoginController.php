@@ -44,7 +44,7 @@ class LoginController extends MineController
     public function login(SystemUserRequest $request): ResponseInterface
     {
         $requestData = $request->validated();
-        $vo = new UserServiceVo();
+        $vo          = new UserServiceVo();
         $vo->setUsername($requestData['username']);
         $vo->setPassword($requestData['password']);
 
@@ -98,8 +98,8 @@ class LoginController extends MineController
     {
         try {
             $response = file_get_contents('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1');
-            $content = json_decode($response);
-            if (! empty($content?->images[0]?->url)) {
+            $content  = json_decode($response);
+            if (!empty($content?->images[0]?->url)) {
                 return $this->success([
                     'url' => 'https://cn.bing.com' . $content?->images[0]?->url,
                 ]);

@@ -16,7 +16,7 @@ class SettingCrontabMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SettingCrontab::class;
     }
@@ -54,8 +54,7 @@ class SettingCrontabMapper extends AbstractMapper
         }
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at',
-                [
+                'created_at', [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],

@@ -47,7 +47,7 @@ class SystemPostRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +59,9 @@ class SystemPostRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '岗位ID',
-            'name' => '岗位名称',
-            'code' => '岗位标识',
+            'id'     => '岗位ID',
+            'name'   => '岗位名称',
+            'code'   => '岗位标识',
             'status' => '岗位状态',
         ];
     }

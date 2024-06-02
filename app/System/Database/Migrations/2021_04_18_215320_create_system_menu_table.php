@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -33,7 +34,7 @@ class CreateSystemMenuTable extends Migration
                 'comment' => '是否隐藏 (1是 2否)',
             ]);
             $table->addColumn('char', 'type', [
-                'length' => 1,
+                'length'  => 1,
                 'default' => '',
                 'comment' => '菜单类型, (M菜单 B按钮 L链接 I iframe)',
             ]);
@@ -43,15 +44,15 @@ class CreateSystemMenuTable extends Migration
             ])->nullable();
             $table->addColumn('smallInteger', 'sort', [
                 'unsigned' => true,
-                'default' => 0,
-                'comment' => '排序',
+                'default'  => 0,
+                'comment'  => '排序',
             ])->nullable();
             $table->addColumn('bigInteger', 'created_by', ['comment' => '创建者'])->nullable();
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->timestamps();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment' => '删除时间',
+                'comment'   => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

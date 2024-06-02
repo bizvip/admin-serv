@@ -19,7 +19,7 @@ class SettingGenerateColumnsMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SettingGenerateColumns::class;
     }
@@ -30,7 +30,7 @@ class SettingGenerateColumnsMapper extends AbstractMapper
     public function handleSearch(Builder $query, array $params): Builder
     {
         if ($params['table_id'] ?? false) {
-            $query->where('table_id', (int) $params['table_id']);
+            $query->where('table_id', (int)$params['table_id']);
         }
 
         return $query;

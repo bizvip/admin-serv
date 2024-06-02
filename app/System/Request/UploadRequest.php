@@ -45,7 +45,7 @@ class UploadRequest extends MineFormRequest
     {
         return [
             'image' => 'required|mimes:' . $this->getMimes('upload_allow_image'),
-            'path' => 'max:30',
+            'path'  => 'max:30',
         ];
     }
 
@@ -57,13 +57,13 @@ class UploadRequest extends MineFormRequest
     {
         return [
             'package' => 'required',
-            'total' => 'required',
-            'index' => 'required',
-            'hash' => 'required',
-            'ext' => 'required',
-            'type' => 'required',
-            'name' => 'required',
-            'size' => 'required',
+            'total'   => 'required',
+            'index'   => 'required',
+            'hash'    => 'required',
+            'ext'     => 'required',
+            'type'    => 'required',
+            'name'    => 'required',
+            'size'    => 'required',
         ];
     }
 
@@ -74,7 +74,7 @@ class UploadRequest extends MineFormRequest
     public function saveNetworkImageRules(): array
     {
         return [
-            'url' => 'required',
+            'url'  => 'required',
             'path' => 'max:30',
         ];
     }
@@ -86,18 +86,18 @@ class UploadRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'url' => '网络图片地址',
-            'path' => '保存目录',
-            'image' => '上传图片',
-            'file' => '上传文件',
+            'url'     => '网络图片地址',
+            'path'    => '保存目录',
+            'image'   => '上传图片',
+            'file'    => '上传文件',
             'package' => '文件数据包',
-            'total' => '总分块数',
-            'index' => '分块索引',
-            'hash' => '文件hash',
-            'ext' => '文件扩展名',
-            'type' => '文件类型',
-            'name' => '文件名称',
-            'size' => '文件大小',
+            'total'   => '总分块数',
+            'index'   => '分块索引',
+            'hash'    => '文件hash',
+            'ext'     => '文件扩展名',
+            'type'    => '文件类型',
+            'name'    => '文件名称',
+            'size'    => '文件大小',
         ];
     }
 

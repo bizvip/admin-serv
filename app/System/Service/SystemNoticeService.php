@@ -53,9 +53,9 @@ class SystemNoticeService extends AbstractService
         $userIds = $data['users'] ?? [];
         if (empty($userIds)) {
             $userMapper = container()->get(SystemUserMapper::class);
-            $userIds = $userMapper->pluck(['status' => MineModel::ENABLE]);
+            $userIds    = $userMapper->pluck(['status' => MineModel::ENABLE]);
         }
-        $data['message_id'] = context_get('id') ?? (string) $this->idGenerator->generate();
+        $data['message_id'] = context_get('id') ?? (string)$this->idGenerator->generate();
 
         return parent::save($data);
     }

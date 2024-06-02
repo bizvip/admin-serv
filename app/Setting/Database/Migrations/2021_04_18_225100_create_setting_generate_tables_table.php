@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -27,18 +28,16 @@ class CreateSettingGenerateTablesTable extends Migration
             $table->addColumn('string', 'menu_name', ['length' => 100, 'comment' => '生成菜单名'])
                 ->nullable();
             $table->addColumn('bigInteger', 'belong_menu_id', [
-                'length' => 100,
+                'length'  => 100,
                 'comment' => '所属菜单',
             ])->nullable();
             $table->addColumn('string', 'package_name', [
-                'length' => 100,
+                'length'  => 100,
                 'comment' => '控制器包名',
             ])->nullable();
             $table->addColumn(
-                'string',
-                'type',
-                [
-                    'length' => 100,
+                'string', 'type', [
+                    'length'  => 100,
                     'comment' => '生成类型，single 单表CRUD，tree 树表CRUD，parent_sub父子表CRUD',
                 ],
             )->nullable();
@@ -47,7 +46,7 @@ class CreateSettingGenerateTablesTable extends Migration
                 'comment' => '1 压缩包下载 2 生成到模块',
             ])->nullable();
             $table->addColumn('string', 'generate_menus', [
-                'length' => 255,
+                'length'  => 255,
                 'comment' => '生成菜单列表',
             ])->nullable();
             $table->addColumn('smallInteger', 'build_menu', [
@@ -64,11 +63,11 @@ class CreateSettingGenerateTablesTable extends Migration
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment' => '创建时间',
+                'comment'   => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment' => '更新时间',
+                'comment'   => '更新时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

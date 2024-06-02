@@ -47,7 +47,7 @@ class SystemDeptService extends AbstractService
             $users[] = array_merge(['created_at' => date('Y-m-d H:i:s')], $item);
         }
 
-        return $this->mapper->addLeader((int) $data['id'], $users);
+        return $this->mapper->addLeader((int)$data['id'], $users);
     }
 
     /**
@@ -60,7 +60,7 @@ class SystemDeptService extends AbstractService
             $users[] = ['user_id' => $id];
         }
 
-        return $this->mapper->delLeader((int) $data['id'], $users);
+        return $this->mapper->delLeader((int)$data['id'], $users);
     }
 
     /**
@@ -100,7 +100,7 @@ class SystemDeptService extends AbstractService
         $ctuIds = [];
         if (count($ids)) {
             foreach ($ids as $id) {
-                if (! $this->checkChildrenExists((int) $id)) {
+                if (!$this->checkChildrenExists((int)$id)) {
                     $this->mapper->realDelete([$id]);
                 } else {
                     $ctuIds[] = $id;

@@ -17,7 +17,7 @@ class SystemRoleMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemRole::class;
     }
@@ -104,8 +104,8 @@ class SystemRoleMapper extends AbstractMapper
         if ($id != env('ADMIN_ROLE')) {
             $role = $this->model::find($id);
             if ($role) {
-                ! empty($menuIds) && $role->menus()->sync(array_unique($menuIds));
-                ! empty($deptIds) && $role->depts()->sync($deptIds);
+                !empty($menuIds) && $role->menus()->sync(array_unique($menuIds));
+                !empty($deptIds) && $role->depts()->sync($deptIds);
 
                 return true;
             }
@@ -177,8 +177,7 @@ class SystemRoleMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at',
-                [
+                'created_at', [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],

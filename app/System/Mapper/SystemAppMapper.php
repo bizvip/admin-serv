@@ -21,7 +21,7 @@ class SystemAppMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemApp::class;
     }
@@ -91,7 +91,7 @@ class SystemAppMapper extends AbstractMapper
             $groupIds[] = $api['group_id'];
         }
         $systemApiGroupMapper = container()->get(SystemApiGroupMapper::class);
-        $data['apiGroup'] = $systemApiGroupMapper->get(function ($query) use ($groupIds) {
+        $data['apiGroup']     = $systemApiGroupMapper->get(function ($query) use ($groupIds) {
             /* @var Hyperf\Database\Model\Builder $query */
             return $query->whereIn('id', array_unique($groupIds));
         }, ['id', 'name']);

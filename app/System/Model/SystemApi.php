@@ -13,26 +13,26 @@ use Hyperf\Database\Model\SoftDeletes;
 use Mine\MineModel;
 
 /**
- * @property int $id 主键
- * @property int $group_id 接口组ID
- * @property string $name 接口名称
- * @property string $access_name 接口访问名称
- * @property string $class_name 类命名空间
- * @property string $method_name 方法名
- * @property int $auth_mode 认证模式 (1简易 2复杂)
- * @property string $request_mode 请求模式 (A 所有 P POST G GET)
- * @property string $description 接口说明介绍
- * @property string $response 返回内容示例
- * @property int $status 状态 (1正常 2停用)
- * @property int $created_by 创建者
- * @property int $updated_by 更新者
- * @property Carbon $created_at 创建时间
- * @property Carbon $updated_at 更新时间
- * @property string $deleted_at 删除时间
- * @property string $remark 备注
+ * @property int                          $id           主键
+ * @property int                          $group_id     接口组ID
+ * @property string                       $name         接口名称
+ * @property string                       $access_name  接口访问名称
+ * @property string                       $class_name   类命名空间
+ * @property string                       $method_name  方法名
+ * @property int                          $auth_mode    认证模式 (1简易 2复杂)
+ * @property string                       $request_mode 请求模式 (A 所有 P POST G GET)
+ * @property string                       $description  接口说明介绍
+ * @property string                       $response     返回内容示例
+ * @property int                          $status       状态 (1正常 2停用)
+ * @property int                          $created_by   创建者
+ * @property int                          $updated_by   更新者
+ * @property Carbon                       $created_at   创建时间
+ * @property Carbon                       $updated_at   更新时间
+ * @property string                       $deleted_at   删除时间
+ * @property string                       $remark       备注
  * @property Collection|SystemApiColumn[] $apiColumn
- * @property SystemApiGroup $apiGroup
- * @property Collection|SystemApp[] $apps
+ * @property SystemApiGroup               $apiGroup
+ * @property Collection|SystemApp[]       $apps
  */
 class SystemApi extends MineModel
 {
@@ -70,10 +70,10 @@ class SystemApi extends MineModel
      * The attributes that should be cast to native types.
      */
     protected array $casts = [
-        'id' => 'integer',
-        'group_id' => 'integer',
-        'auth_mode' => 'integer',
-        'status' => 'integer',
+        'id'         => 'integer',
+        'group_id'   => 'integer',
+        'auth_mode'  => 'integer',
+        'status'     => 'integer',
         'created_by' => 'integer',
         'updated_by' => 'integer',
         'created_at' => 'datetime',

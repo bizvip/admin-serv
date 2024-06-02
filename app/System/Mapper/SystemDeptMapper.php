@@ -19,7 +19,7 @@ class SystemDeptMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemDept::class;
     }
@@ -45,8 +45,8 @@ class SystemDeptMapper extends AbstractMapper
 
         $deptTree = (new MineCollection())->toTree($treeData, $treeData[0]['parent_id'] ?? 0);
 
-        if (config('mineadmin.data_scope_enabled', true) && ! user()->isSuperAdmin()) {
-            $deptIds = Db::table(table: 'system_user_dept')
+        if (config('mineadmin.data_scope_enabled', true) && !user()->isSuperAdmin()) {
+            $deptIds  = Db::table(table: 'system_user_dept')
                 ->where('user_id', '=', user()->getId())
                 ->pluck('dept_id');
             $treeData = $this->model::query()
@@ -95,13 +95,10 @@ class SystemDeptMapper extends AbstractMapper
 
         return $this->setPaginate(
             $query->paginate(
-                (int) ($params['pageSize'] ?? $this->model::PAGE_SIZE),
-                [
+                (int)($params['pageSize'] ?? $this->model::PAGE_SIZE), [
                     'u.*',
                     'dl.created_at as leader_add_time',
-                ],
-                'page',
-                (int) ($params['page'] ?? 1),
+                ], 'page', (int)($params['page'] ?? 1),
             ),
         );
     }
@@ -174,8 +171,7 @@ class SystemDeptMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at',
-                [
+                'created_at', [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],

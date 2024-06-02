@@ -20,7 +20,7 @@ class SettingGenerateTablesMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SettingGenerateTables::class;
     }
@@ -53,8 +53,7 @@ class SettingGenerateTablesMapper extends AbstractMapper
         }
         if (isset($params['minDate']) && filled($params['minDate']) && isset($params['maxDate']) && filled($params['maxDate'])) {
             $query->whereBetween(
-                'created_at',
-                [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
+                'created_at', [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
             );
         }
 

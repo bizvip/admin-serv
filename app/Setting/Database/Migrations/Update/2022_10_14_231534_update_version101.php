@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -13,7 +14,7 @@ class UpdateVersion101 extends Migration
     public function up(): void
     {
         Schema::table('setting_generate_columns', function (Blueprint $table) {
-            if (! Schema::hasColumn('setting_generate_columns', 'is_sort')) {
+            if (!Schema::hasColumn('setting_generate_columns', 'is_sort')) {
                 $table->addColumn('smallInteger', 'is_sort')
                     ->comment('1 不排序 2 排序字段')
                     ->default(1)

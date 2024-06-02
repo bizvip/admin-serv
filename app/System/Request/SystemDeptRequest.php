@@ -34,7 +34,7 @@ class SystemDeptRequest extends MineFormRequest
     public function addLeaderRules(): array
     {
         return [
-            'id' => 'required',
+            'id'    => 'required',
             'users' => 'required',
         ];
     }
@@ -46,7 +46,7 @@ class SystemDeptRequest extends MineFormRequest
     public function delLeaderRules(): array
     {
         return [
-            'id' => 'required',
+            'id'  => 'required',
             'ids' => 'array',
         ];
     }
@@ -69,7 +69,7 @@ class SystemDeptRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -81,10 +81,10 @@ class SystemDeptRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '部门ID',
-            'name' => '部门名称',
+            'id'     => '部门ID',
+            'name'   => '部门名称',
             'status' => '部门状态',
-            'users' => '用户信息',
+            'users'  => '用户信息',
         ];
     }
 }

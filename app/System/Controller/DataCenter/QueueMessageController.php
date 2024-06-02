@@ -75,8 +75,7 @@ class QueueMessageController extends MineController
     {
         return $this->success(
             $this->service->getReceiveUserList(
-                (int) $this->request->input('id', 0),
-                $this->request->all(),
+                (int)$this->request->input('id', 0), $this->request->all(),
             ),
         );
     }
@@ -89,7 +88,7 @@ class QueueMessageController extends MineController
     #[DeleteMapping('deletes')]
     public function deletes(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -100,6 +99,6 @@ class QueueMessageController extends MineController
     #[PutMapping('updateReadStatus')]
     public function updateReadStatus(): ResponseInterface
     {
-        return $this->service->updateDataStatus((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->updateDataStatus((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 }

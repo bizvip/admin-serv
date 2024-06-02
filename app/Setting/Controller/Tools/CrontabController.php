@@ -123,7 +123,7 @@ class CrontabController extends MineController
     #[DeleteMapping('delete'), Permission('setting:crontab:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -134,7 +134,7 @@ class CrontabController extends MineController
     #[DeleteMapping('deleteCrontabLog'), Permission('setting:crontab:deleteCrontabLog'), OperationLog('删除定时任务日志')]
     public function deleteCrontabLog(): ResponseInterface
     {
-        return $this->logService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->logService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -145,7 +145,7 @@ class CrontabController extends MineController
     #[PutMapping('changeStatus'), Permission('setting:crontab:update'), OperationLog]
     public function changeStatus(): ResponseInterface
     {
-        return $this->service->changeStatus((int) $this->request->input('id'), (string) $this->request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$this->request->input('id'), (string)$this->request->input('status')) ? $this->success() : $this->error();
     }
 
     /**

@@ -23,13 +23,13 @@ class SystemApiRequest extends MineFormRequest
     public function saveRules(): array
     {
         return [
-            'name' => 'required',
-            'class_name' => 'required',
-            'method_name' => 'required',
-            'access_name' => 'required',
-            'auth_mode' => 'required',
+            'name'         => 'required',
+            'class_name'   => 'required',
+            'method_name'  => 'required',
+            'access_name'  => 'required',
+            'auth_mode'    => 'required',
             'request_mode' => 'required',
-            'group_id' => 'required',
+            'group_id'     => 'required',
         ];
     }
 
@@ -40,10 +40,10 @@ class SystemApiRequest extends MineFormRequest
     public function updateRules(): array
     {
         return [
-            'name' => 'required',
-            'class_name' => 'required',
-            'method_name' => 'required',
-            'auth_mode' => 'required',
+            'name'         => 'required',
+            'class_name'   => 'required',
+            'method_name'  => 'required',
+            'auth_mode'    => 'required',
             'request_mode' => 'required',
         ];
     }
@@ -55,7 +55,7 @@ class SystemApiRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -67,13 +67,13 @@ class SystemApiRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '接口ID',
-            'name' => '接口名称',
-            'class_name' => '类命名空间地址',
-            'method_name' => '方法名',
-            'auth_mode' => '验证模式',
+            'id'           => '接口ID',
+            'name'         => '接口名称',
+            'class_name'   => '类命名空间地址',
+            'method_name'  => '方法名',
+            'auth_mode'    => '验证模式',
             'request_mode' => '请求方式',
-            'status' => '接口状态',
+            'status'       => '接口状态',
         ];
     }
 }

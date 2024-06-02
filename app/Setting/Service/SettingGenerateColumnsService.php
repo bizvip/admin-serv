@@ -15,7 +15,8 @@ use Mine\Interfaces\ServiceInterface\GenerateColumnServiceInterface;
  * Class SettingGenerateColumnsService.
  */
 #[DependProxy(values: [GenerateColumnServiceInterface::class])]
-class SettingGenerateColumnsService extends AbstractService implements GenerateColumnServiceInterface
+class SettingGenerateColumnsService extends AbstractService implements
+    GenerateColumnServiceInterface
 {
     /**
      * @var SettingGenerateColumnsMapper
@@ -46,30 +47,29 @@ class SettingGenerateColumnsService extends AbstractService implements GenerateC
         // 组装数据
         foreach ($data as $k => $item) {
             $column = [
-                'table_id' => $item['table_id'],
-                'column_name' => $item['column_name'],
+                'table_id'       => $item['table_id'],
+                'column_name'    => $item['column_name'],
                 'column_comment' => $item['column_comment'],
-                'column_type' => $item['data_type'],
-                'is_pk' => empty($item['column_key']) ? SettingGenerateColumns::NO : SettingGenerateColumns::YES,
-                'is_required' => $item['is_nullable'] == 'NO' ? SettingGenerateColumns::YES : SettingGenerateColumns::NO,
-                'query_type' => 'eq',
-                'view_type' => 'text',
-                'sort' => count($data) - $k,
-                'allow_roles' => $item['allow_roles'] ?? null,
-                'options' => $item['options'] ?? null,
-                'extra' => $item['extra'],
+                'column_type'    => $item['data_type'],
+                'is_pk'          => empty($item['column_key']) ? SettingGenerateColumns::NO : SettingGenerateColumns::YES,
+                'is_required'    => $item['is_nullable'] == 'NO' ? SettingGenerateColumns::YES : SettingGenerateColumns::NO,
+                'query_type'     => 'eq',
+                'view_type'      => 'text',
+                'sort'           => count($data) - $k,
+                'allow_roles'    => $item['allow_roles'] ?? null,
+                'options'        => $item['options'] ?? null,
+                'extra'          => $item['extra'],
             ];
 
             // 设置默认选项
-            if (! in_array($item['column_name'], $default_column) && empty($item['column_key'])) {
+            if (!in_array($item['column_name'], $default_column) && empty($item['column_key'])) {
                 $column = array_merge(
-                    $column,
-                    [
+                    $column, [
                         'is_insert' => SettingGenerateColumns::YES,
-                        'is_edit' => SettingGenerateColumns::YES,
-                        'is_list' => SettingGenerateColumns::YES,
-                        'is_query' => SettingGenerateColumns::YES,
-                        'is_sort' => SettingGenerateColumns::NO,
+                        'is_edit'   => SettingGenerateColumns::YES,
+                        'is_list'   => SettingGenerateColumns::YES,
+                        'is_query'  => SettingGenerateColumns::YES,
+                        'is_sort'   => SettingGenerateColumns::NO,
                     ],
                 );
             }
@@ -84,11 +84,11 @@ class SettingGenerateColumnsService extends AbstractService implements GenerateC
 
     public function update(mixed $id, array $data): bool
     {
-        $data['is_insert'] = $data['is_insert'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
-        $data['is_edit'] = $data['is_edit'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
-        $data['is_list'] = $data['is_list'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
-        $data['is_query'] = $data['is_query'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
-        $data['is_sort'] = $data['is_sort'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
+        $data['is_insert']   = $data['is_insert'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
+        $data['is_edit']     = $data['is_edit'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
+        $data['is_list']     = $data['is_list'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
+        $data['is_query']    = $data['is_query'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
+        $data['is_sort']     = $data['is_sort'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
         $data['is_required'] = $data['is_required'] ? SettingGenerateColumns::YES : SettingGenerateColumns::NO;
 
         return $this->mapper->update($id, $data);
@@ -102,31 +102,31 @@ class SettingGenerateColumnsService extends AbstractService implements GenerateC
                 switch ($column['column_type']) {
                     case 'varchar':
                         $column['query_type'] = 'like';
-                        $column['view_type'] = 'text';
+                        $column['view_type']  = 'text';
                         break;
-                        // 富文本
+                    // 富文本
                     case 'text':
                     case 'longtext':
-                        $column['is_list'] = SettingGenerateColumns::NO;
-                        $column['is_query'] = SettingGenerateColumns::NO;
+                        $column['is_list']   = SettingGenerateColumns::NO;
+                        $column['is_query']  = SettingGenerateColumns::NO;
                         $column['view_type'] = 'editor';
                         break;
-                        // 日期字段
+                    // 日期字段
                     case 'timestamp':
                     case 'datetime':
-                        $column['view_type'] = 'date';
-                        $column['options']['mode'] = 'date';
+                        $column['view_type']           = 'date';
+                        $column['options']['mode']     = 'date';
                         $column['options']['showTime'] = true;
-                        $column['query_type'] = 'between';
+                        $column['query_type']          = 'between';
                         break;
                     case 'date':
-                        $column['view_type'] = 'date';
-                        $column['options']['mode'] = 'date';
+                        $column['view_type']           = 'date';
+                        $column['options']['mode']     = 'date';
                         $column['options']['showTime'] = false;
-                        $column['query_type'] = 'between';
+                        $column['query_type']          = 'between';
                         break;
                     case 'json':
-                        $column['is_list'] = SettingGenerateColumns::NO;
+                        $column['is_list']  = SettingGenerateColumns::NO;
                         $column['is_query'] = SettingGenerateColumns::NO;
                         break;
                 }
@@ -135,9 +135,9 @@ class SettingGenerateColumnsService extends AbstractService implements GenerateC
             public function columnCommentDispose(&$column): void
             {
                 if (preg_match('/.*:.*=.*/m', $column['column_comment'])) {
-                    $regs = explode(':', $column['column_comment']);
-                    $column['column_comment'] = $regs[0] ?? '';
-                    $column['view_type'] = 'select';
+                    $regs                            = explode(':', $column['column_comment']);
+                    $column['column_comment']        = $regs[0] ?? '';
+                    $column['view_type']             = 'select';
                     $column['options']['collection'] = array_map(function ($item) {
                         $item = explode('=', $item);
 
@@ -152,35 +152,35 @@ class SettingGenerateColumnsService extends AbstractService implements GenerateC
             public function columnName(&$column): void
             {
                 if (stristr($column['column_name'], 'image')) {
-                    $column['is_query'] = SettingGenerateColumns::NO;
-                    $column['view_type'] = 'upload';
-                    $column['options']['type'] = 'image';
+                    $column['is_query']            = SettingGenerateColumns::NO;
+                    $column['view_type']           = 'upload';
+                    $column['options']['type']     = 'image';
                     $column['options']['multiple'] = false;
-                    $column['query_type'] = 'eq';
+                    $column['query_type']          = 'eq';
                 }
 
                 if (stristr($column['column_name'], 'images')) {
-                    $column['is_query'] = SettingGenerateColumns::NO;
-                    $column['view_type'] = 'upload';
-                    $column['options']['type'] = 'image';
+                    $column['is_query']            = SettingGenerateColumns::NO;
+                    $column['view_type']           = 'upload';
+                    $column['options']['type']     = 'image';
                     $column['options']['multiple'] = true;
-                    $column['query_type'] = 'eq';
+                    $column['query_type']          = 'eq';
                 }
 
                 if (stristr($column['column_name'], 'file')) {
-                    $column['is_query'] = SettingGenerateColumns::NO;
-                    $column['view_type'] = 'upload';
-                    $column['options']['type'] = 'file';
+                    $column['is_query']            = SettingGenerateColumns::NO;
+                    $column['view_type']           = 'upload';
+                    $column['options']['type']     = 'file';
                     $column['options']['multiple'] = false;
-                    $column['query_type'] = 'eq';
+                    $column['query_type']          = 'eq';
                 }
 
                 if (stristr($column['column_name'], 'files')) {
-                    $column['is_query'] = SettingGenerateColumns::NO;
-                    $column['view_type'] = 'upload';
-                    $column['options']['type'] = 'file';
+                    $column['is_query']            = SettingGenerateColumns::NO;
+                    $column['view_type']           = 'upload';
+                    $column['options']['type']     = 'file';
                     $column['options']['multiple'] = true;
-                    $column['query_type'] = 'eq';
+                    $column['query_type']          = 'eq';
                 }
             }
         };

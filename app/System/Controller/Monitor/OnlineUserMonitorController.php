@@ -50,6 +50,6 @@ class OnlineUserMonitorController extends MineController
     #[PostMapping('kick'), Permission('system:onlineUser:kick')]
     public function kickUser(): ResponseInterface
     {
-        return $this->service->kickUser((string) $this->request->input('id')) ? $this->success() : $this->error();
+        return $this->service->kickUser((string)$this->request->input('id')) ? $this->success() : $this->error();
     }
 }

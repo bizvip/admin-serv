@@ -25,7 +25,7 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
     /**
      * 成功连接到 ws 回调.
      * @param Response|Server $server
-     * @param Request $request
+     * @param Request         $request
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -44,7 +44,7 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
     /**
      * 消息回调.
      * @param Response|Server $server
-     * @param Frame $frame
+     * @param Frame           $frame
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -55,9 +55,9 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
             case 'get_unread_message':
                 $service = container()->get(SystemQueueMessageService::class);
                 $server->push($frame->fd, json_encode([
-                    'event' => 'ev_new_message',
+                    'event'   => 'ev_new_message',
                     'message' => 'success',
-                    'data' => $service->getUnreadMessage(Context::get('uid'))['items'],
+                    'data'    => $service->getUnreadMessage(Context::get('uid'))['items'],
                 ]));
                 break;
         }

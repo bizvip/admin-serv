@@ -28,7 +28,7 @@ class SettingCrontabService extends AbstractService
         SettingCrontabMapper $mapper,
         MineExecutor $mineExecutor,
     ) {
-        $this->mapper = $mapper;
+        $this->mapper       = $mapper;
         $this->mineExecutor = $mineExecutor;
     }
 
@@ -69,9 +69,9 @@ class SettingCrontabService extends AbstractService
     public function run(mixed $id): ?bool
     {
         $crontab = new MineCrontab();
-        $model = $this->read($id);
+        $model   = $this->read($id);
         $crontab->setCallback($model->target);
-        $crontab->setType((string) $model->type);
+        $crontab->setType((string)$model->type);
         $crontab->setEnable(true);
         $crontab->setCrontabId($model->id);
         $crontab->setName($model->name);

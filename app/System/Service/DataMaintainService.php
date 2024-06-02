@@ -36,13 +36,13 @@ class DataMaintainService extends AbstractService
             $columnList = [];
             foreach (Db::select($sql, [env('DB_DATABASE'), $table]) as $column) {
                 $columnList[] = [
-                    'column_key' => $column->COLUMN_KEY,
-                    'column_name' => $column->COLUMN_NAME,
-                    'data_type' => $column->DATA_TYPE,
+                    'column_key'     => $column->COLUMN_KEY,
+                    'column_name'    => $column->COLUMN_NAME,
+                    'data_type'      => $column->DATA_TYPE,
                     'column_comment' => $column->COLUMN_COMMENT,
-                    'extra' => $column->EXTRA,
-                    'column_type' => $column->COLUMN_TYPE,
-                    'is_nullable' => $column->IS_NULLABLE,
+                    'extra'          => $column->EXTRA,
+                    'column_type'    => $column->COLUMN_TYPE,
+                    'is_nullable'    => $column->IS_NULLABLE,
                 ];
             }
 
@@ -111,7 +111,7 @@ class DataMaintainService extends AbstractService
     {
         $tables = [];
         foreach ($data as $item) {
-            $tables[] = array_change_key_case((array) $item);
+            $tables[] = array_change_key_case((array)$item);
         }
 
         return $tables;
@@ -123,8 +123,7 @@ class DataMaintainService extends AbstractService
     protected function getArrayData(array $params = []): array
     {
         return Db::select(
-            Db::raw("SHOW TABLE STATUS WHERE name NOT LIKE '%migrations'")
-                ->getValue(),
+            Db::raw("SHOW TABLE STATUS WHERE name NOT LIKE '%migrations'")->getValue(),
         );
     }
 }

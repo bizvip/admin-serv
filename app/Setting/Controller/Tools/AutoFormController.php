@@ -45,7 +45,7 @@ class AutoFormController extends MineController
             return $this->error('没找到此表, 请检查表id');
         }
         $columns = $this->columnsService->getList(['table_id' => $table_id]);
-        $table = $table->toArray();
+        $table   = $table->toArray();
 
         $table['columns'] = $columns;
 
@@ -114,7 +114,7 @@ class AutoFormController extends MineController
     #[DeleteMapping('delete/{table_id}'), Permission('setting:autoform:{table_id}:delete')]
     public function delete(mixed $table_id): ResponseInterface
     {
-        $ids = (array) $this->request->input('ids', []);
+        $ids = (array)$this->request->input('ids', []);
 
         return $this->service->delete($table_id, $ids) ? $this->success() : $this->error();
     }
@@ -128,10 +128,7 @@ class AutoFormController extends MineController
     public function changeStatus($table_id): ResponseInterface
     {
         return $this->service->changeStatus(
-            $table_id,
-            (int) $this->request->input('id'),
-            (string) $this->request->input('statusValue'),
-            (string) $this->request->input('statusName', 'status'),
+            $table_id, (int)$this->request->input('id'), (string)$this->request->input('statusValue'), (string)$this->request->input('statusName', 'status'),
         ) ? $this->success() : $this->error();
     }
 
@@ -154,7 +151,7 @@ class AutoFormController extends MineController
     #[DeleteMapping('realDelete/{table_id}'), Permission('setting:autoform:{table_id}:realDelete')]
     public function realDelete($table_id): ResponseInterface
     {
-        return $this->service->realDelete($table_id, (array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete($table_id, (array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -165,7 +162,7 @@ class AutoFormController extends MineController
     #[PutMapping('recovery/{table_id}'), Permission('setting:autoform:{table_id}:recovery')]
     public function recovery($table_id): ResponseInterface
     {
-        return $this->service->recovery($table_id, (array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery($table_id, (array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

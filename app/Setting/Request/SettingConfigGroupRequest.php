@@ -44,7 +44,7 @@ class SettingConfigGroupRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '主键',
+            'id'   => '主键',
             'name' => '配置组名称',
             'code' => '配置组标识',
         ];

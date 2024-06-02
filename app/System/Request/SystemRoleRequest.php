@@ -47,7 +47,7 @@ class SystemRoleRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +59,9 @@ class SystemRoleRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '角色ID',
-            'name' => '角色名称',
-            'code' => '角色标识',
+            'id'     => '角色ID',
+            'name'   => '角色名称',
+            'code'   => '角色标识',
             'status' => '角色状态',
         ];
     }

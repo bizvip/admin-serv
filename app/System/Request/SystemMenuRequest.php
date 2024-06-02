@@ -47,7 +47,7 @@ class SystemMenuRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id' => 'required',
+            'id'     => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +59,9 @@ class SystemMenuRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id' => '菜单ID',
-            'name' => '菜单名称',
-            'code' => '菜单标识',
+            'id'     => '菜单ID',
+            'name'   => '菜单名称',
+            'code'   => '菜单标识',
             'status' => '菜单状态',
         ];
     }

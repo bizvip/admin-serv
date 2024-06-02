@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -18,7 +19,7 @@ class CreateSystemAppTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('bigInteger', 'group_id', [
                 'unsigned' => true,
-                'comment' => '应用组ID',
+                'comment'  => '应用组ID',
             ]);
             $table->addColumn('string', 'app_name', ['length' => 32, 'comment' => '应用名称']);
             $table->addColumn('string', 'app_id', ['length' => 16, 'comment' => '应用ID']);
@@ -32,15 +33,15 @@ class CreateSystemAppTable extends Migration
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment' => '创建时间',
+                'comment'   => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment' => '更新时间',
+                'comment'   => '更新时间',
             ])->nullable();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment' => '删除时间',
+                'comment'   => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

@@ -14,7 +14,7 @@ class SettingConfigGroupMapper extends AbstractMapper
      */
     public $model;
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SettingConfigGroup::class;
     }

@@ -98,7 +98,7 @@ class NoticeController extends MineController
     #[DeleteMapping('delete'), Permission('system:notice:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -109,7 +109,7 @@ class NoticeController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:notice:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -120,7 +120,7 @@ class NoticeController extends MineController
     #[PutMapping('recovery'), Permission('system:notice:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

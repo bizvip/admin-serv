@@ -110,7 +110,7 @@ class SystemApiController extends MineController
     #[DeleteMapping('delete'), Permission('system:api:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -121,7 +121,7 @@ class SystemApiController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:api:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -132,7 +132,7 @@ class SystemApiController extends MineController
     #[PutMapping('recovery'), Permission('system:api:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -143,7 +143,7 @@ class SystemApiController extends MineController
     #[PutMapping('changeStatus'), Permission('system:api:update'), OperationLog]
     public function changeStatus(SystemApiRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $this->request->input('id'), (string) $this->request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$this->request->input('id'), (string)$this->request->input('status')) ? $this->success() : $this->error();
     }
 
     /**

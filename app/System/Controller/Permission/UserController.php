@@ -99,7 +99,7 @@ class UserController extends MineController
     #[DeleteMapping('delete'), Permission('system:user:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -110,7 +110,7 @@ class UserController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:user:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -121,7 +121,7 @@ class UserController extends MineController
     #[PutMapping('recovery'), Permission('system:user:recovery'), OperationLog]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -132,7 +132,7 @@ class UserController extends MineController
     #[PutMapping('changeStatus'), Permission('system:user:changeStatus'), OperationLog]
     public function changeStatus(SystemUserRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $request->input('id'), (string) $request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$request->input('id'), (string)$request->input('status')) ? $this->success() : $this->error();
     }
 
     /**
@@ -143,7 +143,7 @@ class UserController extends MineController
     #[PostMapping('clearCache'), Permission('system:user:cache')]
     public function clearCache(): ResponseInterface
     {
-        $this->service->clearCache((string) $this->request->input('id', null));
+        $this->service->clearCache((string)$this->request->input('id', null));
 
         return $this->success();
     }
@@ -167,7 +167,7 @@ class UserController extends MineController
     #[PutMapping('initUserPassword'), Permission('system:user:initUserPassword'), OperationLog]
     public function initUserPassword(): ResponseInterface
     {
-        return $this->service->initUserPassword((int) $this->request->input('id')) ? $this->success() : $this->error();
+        return $this->service->initUserPassword((int)$this->request->input('id')) ? $this->success() : $this->error();
     }
 
     /**

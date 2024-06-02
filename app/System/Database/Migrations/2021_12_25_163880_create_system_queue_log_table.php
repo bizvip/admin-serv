@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -17,11 +18,11 @@ class CreateSystemQueueLogTable extends Migration
             $table->comment('队列日志表');
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('string', 'exchange_name', [
-                'length' => 32,
+                'length'  => 32,
                 'comment' => '交换机名称',
             ]);
             $table->addColumn('string', 'routing_key_name', [
-                'length' => 32,
+                'length'  => 32,
                 'comment' => '路由名称',
             ]);
             $table->addColumn('string', 'queue_name', ['length' => 64, 'comment' => '队列名称']);
@@ -37,16 +38,16 @@ class CreateSystemQueueLogTable extends Migration
             ])->nullable();
             $table->addColumn('integer', 'delay_time', [
                 'unsigned' => true,
-                'comment' => '延迟时间（秒）',
+                'comment'  => '延迟时间（秒）',
             ]);
             $table->addColumn('bigInteger', 'created_by', ['comment' => '创建者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment' => '创建时间',
+                'comment'   => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment' => '更新时间',
+                'comment'   => '更新时间',
             ])->nullable();
         });
     }

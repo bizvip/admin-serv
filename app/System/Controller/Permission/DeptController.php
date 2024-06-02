@@ -124,7 +124,7 @@ class DeptController extends MineController
     #[DeleteMapping('delete'), Permission('system:dept:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -135,7 +135,7 @@ class DeptController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:dept:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        $data = $this->service->realDel((array) $this->request->input('ids', []));
+        $data = $this->service->realDel((array)$this->request->input('ids', []));
 
         return is_null($data) ? $this->success() : $this->success(t('system.exists_children_ctu', ['names' => implode(',', $data)]));
     }
@@ -148,7 +148,7 @@ class DeptController extends MineController
     #[PutMapping('recovery'), Permission('system:dept:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -159,7 +159,7 @@ class DeptController extends MineController
     #[PutMapping('changeStatus'), Permission('system:dept:changeStatus'), OperationLog]
     public function changeStatus(SystemDeptRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $request->input('id'), (string) $request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$request->input('id'), (string)$request->input('status')) ? $this->success() : $this->error();
     }
 
     /**
@@ -171,9 +171,7 @@ class DeptController extends MineController
     public function numberOperation(): ResponseInterface
     {
         return $this->service->numberOperation(
-            (int) $this->request->input('id'),
-            (string) $this->request->input('numberName'),
-            (int) $this->request->input('numberValue', 1),
+            (int)$this->request->input('id'), (string)$this->request->input('numberName'), (int)$this->request->input('numberValue', 1),
         ) ? $this->success() : $this->error();
     }
 

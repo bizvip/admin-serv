@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -18,12 +19,12 @@ class CreateSettingGenerateColumnsTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('bigInteger', 'table_id', [
                 'unsigned' => true,
-                'comment' => '所属表ID',
+                'comment'  => '所属表ID',
             ]);
             $table->addColumn('string', 'column_name', ['length' => 200, 'comment' => '字段名称'])
                 ->nullable();
             $table->addColumn('string', 'column_comment', [
-                'length' => 255,
+                'length'  => 255,
                 'comment' => '字段注释',
             ])->nullable();
             $table->addColumn('string', 'column_type', ['length' => 50, 'comment' => '字段类型'])
@@ -53,19 +54,15 @@ class CreateSettingGenerateColumnsTable extends Migration
                 'comment' => '1 非查询字段 2 查询字段',
             ])->nullable();
             $table->addColumn(
-                'string',
-                'query_type',
-                [
-                    'length' => 100,
+                'string', 'query_type', [
+                    'length'  => 100,
                     'default' => 'eq',
                     'comment' => '查询方式 eq 等于, neq 不等于, gt 大于, lt 小于, like 范围',
                 ],
             )->nullable();
             $table->addColumn(
-                'string',
-                'view_type',
-                [
-                    'length' => 100,
+                'string', 'view_type', [
+                    'length'  => 100,
                     'default' => 'text',
                     'comment' => '页面控件，text, textarea, password, select, checkbox, radio, date, upload, ma-upload（封装的上传控件）',
                 ],
@@ -73,7 +70,7 @@ class CreateSettingGenerateColumnsTable extends Migration
             $table->addColumn('string', 'dict_type', ['length' => 200, 'comment' => '字典类型'])
                 ->nullable();
             $table->addColumn('string', 'allow_roles', [
-                'length' => 255,
+                'length'  => 255,
                 'comment' => '允许查看该字段的角色',
             ])->nullable();
             $table->addColumn('string', 'options', ['length' => 1000, 'comment' => '字段其他设置'])
@@ -82,18 +79,18 @@ class CreateSettingGenerateColumnsTable extends Migration
                 ->nullable();
             $table->addColumn('tinyInteger', 'sort', [
                 'unsigned' => true,
-                'default' => 0,
-                'comment' => '排序',
+                'default'  => 0,
+                'comment'  => '排序',
             ])->nullable();
             $table->addColumn('bigInteger', 'created_by', ['comment' => '创建者'])->nullable();
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment' => '创建时间',
+                'comment'   => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment' => '更新时间',
+                'comment'   => '更新时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

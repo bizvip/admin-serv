@@ -37,7 +37,7 @@ class SystemMenuMapper extends AbstractMapper
         'type',
     ];
 
-    public function assignModel()
+    public function assignModel(): void
     {
         $this->model = SystemMenu::class;
     }
@@ -82,7 +82,7 @@ class SystemMenuMapper extends AbstractMapper
             ->where('status', $this->model::ENABLE)
             ->orderBy('sort', 'desc');
 
-        if (($data['scope'] ?? false) && ! user()->isSuperAdmin()) {
+        if (($data['scope'] ?? false) && !user()->isSuperAdmin()) {
             $roleData = container()->get(SystemRoleMapper::class)->getMenuIdsByRoleIds(
                 SystemUser::find(user()->getId(), ['id'])->roles()->pluck('id')->toArray(),
             );
@@ -97,7 +97,7 @@ class SystemMenuMapper extends AbstractMapper
             $query->whereIn('id', array_unique($ids));
         }
 
-        if (! empty($data['onlyMenu'])) {
+        if (!empty($data['onlyMenu'])) {
             $query->where('type', SystemMenu::MENUS_LIST);
         }
 
@@ -201,8 +201,7 @@ class SystemMenuMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at',
-                [
+                'created_at', [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],

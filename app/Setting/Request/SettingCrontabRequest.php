@@ -14,9 +14,9 @@ class SettingCrontabRequest extends MineFormRequest
     public function commonRules(): array
     {
         return [
-            'name' => 'required',
-            'type' => 'required',
-            'rule' => 'required',
+            'name'   => 'required',
+            'type'   => 'required',
+            'rule'   => 'required',
             'target' => 'required',
         ];
     }
@@ -46,10 +46,10 @@ class SettingCrontabRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'name' => '任务名称',
-            'type' => '任务类型',
+            'name'   => '任务名称',
+            'type'   => '任务类型',
             'target' => '调用目标',
-            'rule' => '定时规则表达式',
+            'rule'   => '定时规则表达式',
         ];
     }
 }

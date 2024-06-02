@@ -31,7 +31,7 @@ class ValidatorFactoryResolvedListener implements ListenerInterface
             array $parameters,
             Validator $validator,
         ): bool {
-            return (bool) preg_match('/^1[3-9]\d{9}$/', $value);
+            return (bool)preg_match('/^1[3-9]\d{9}$/', $value);
         });
     }
 }

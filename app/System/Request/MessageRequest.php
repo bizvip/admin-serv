@@ -22,8 +22,8 @@ class MessageRequest extends MineFormRequest
     public function sendPrivateMessageRules(): array
     {
         return [
-            'title' => 'required',
-            'users' => 'required|array',
+            'title'   => 'required',
+            'users'   => 'required|array',
             'content' => 'required',
         ];
     }
@@ -35,8 +35,8 @@ class MessageRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'title' => '信息标题',
-            'users' => '接受用户列表',
+            'title'   => '信息标题',
+            'users'   => '接受用户列表',
             'content' => '信息内容',
         ];
     }

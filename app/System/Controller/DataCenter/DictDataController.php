@@ -131,7 +131,7 @@ class DictDataController extends MineController
     #[DeleteMapping('delete'), Permission('system:dict:delete'), DeleteCache('system:dict:*')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -142,7 +142,7 @@ class DictDataController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:dict:realDelete'), OperationLog, DeleteCache('system:dict:*')]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -153,7 +153,7 @@ class DictDataController extends MineController
     #[PutMapping('recovery'), Permission('system:dict:recovery'), DeleteCache('system:dict:*')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -164,7 +164,7 @@ class DictDataController extends MineController
     #[PutMapping('changeStatus'), Permission('system:dict:update'), OperationLog, DeleteCache('system:dict:*')]
     public function changeStatus(SystemDictDataRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int) $request->input('id'), (string) $request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int)$request->input('id'), (string)$request->input('status')) ? $this->success() : $this->error();
     }
 
     /**
@@ -176,9 +176,7 @@ class DictDataController extends MineController
     public function numberOperation(): ResponseInterface
     {
         return $this->service->numberOperation(
-            (int) $this->request->input('id'),
-            (string) $this->request->input('numberName'),
-            (int) $this->request->input('numberValue', 1),
+            (int)$this->request->input('id'), (string)$this->request->input('numberName'), (int)$this->request->input('numberValue', 1),
         ) ? $this->success() : $this->error();
     }
 

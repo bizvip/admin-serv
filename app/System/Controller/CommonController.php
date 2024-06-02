@@ -75,7 +75,7 @@ class CommonController extends MineController
     #[PostMapping('getUserInfoByIds')]
     public function getUserInfoByIds(): ResponseInterface
     {
-        return $this->success($this->userService->getUserInfoByIds((array) $this->request->input('ids', [])));
+        return $this->success($this->userService->getUserInfoByIds((array)$this->request->input('ids', [])));
     }
 
     /**
@@ -158,7 +158,7 @@ class CommonController extends MineController
     #[GetMapping('clearAllCache')]
     public function clearAllCache(): ResponseInterface
     {
-        $this->userService->clearCache((string) user()->getId());
+        $this->userService->clearCache((string)user()->getId());
 
         return $this->success();
     }

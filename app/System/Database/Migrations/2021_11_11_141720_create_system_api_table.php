@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -18,11 +19,11 @@ class CreateSystemApiTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('bigInteger', 'group_id', [
                 'unsigned' => true,
-                'comment' => '接口组ID',
+                'comment'  => '接口组ID',
             ]);
             $table->addColumn('string', 'name', ['length' => 32, 'comment' => '接口名称']);
             $table->addColumn('string', 'access_name', [
-                'length' => 64,
+                'length'  => 64,
                 'comment' => '接口访问名称',
             ]);
             $table->addColumn('string', 'class_name', ['length' => 128, 'comment' => '类命名空间']);
@@ -32,7 +33,7 @@ class CreateSystemApiTable extends Migration
                 'comment' => '认证模式 (1简易 2复杂)',
             ]);
             $table->addColumn('char', 'request_mode', [
-                'length' => 1,
+                'length'  => 1,
                 'default' => 'A',
                 'comment' => '请求模式 (A 所有 P POST G GET)',
             ]);
@@ -46,15 +47,15 @@ class CreateSystemApiTable extends Migration
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment' => '创建时间',
+                'comment'   => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment' => '更新时间',
+                'comment'   => '更新时间',
             ])->nullable();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment' => '删除时间',
+                'comment'   => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

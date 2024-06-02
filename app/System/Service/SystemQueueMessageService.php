@@ -35,10 +35,10 @@ class SystemQueueMessageService extends AbstractService implements QueueMessageS
     public function getUnreadMessage(int $id): array
     {
         $params = [
-            'user_id' => $id,
-            'orderBy' => 'created_at',
-            'orderType' => 'desc',
-            'getReceive' => true,
+            'user_id'     => $id,
+            'orderBy'     => 'created_at',
+            'orderType'   => 'desc',
+            'getReceive'  => true,
             'read_status' => 1,
         ];
 

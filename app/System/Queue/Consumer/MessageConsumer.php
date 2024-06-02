@@ -27,25 +27,25 @@ class MessageConsumer extends ConsumerMessage
 
     public function __construct(
         private readonly QueueLogServiceInterface $service,
-    ) {}
+    )
+    {
+    }
 
     public function consume($data): Result
     {
         if (empty($data)) {
             return Result::DROP;
         }
-        $queueId = (int) $data['queue_id'];
+        $queueId = (int)$data['queue_id'];
         try {
             $this->service->update(
-                $queueId,
-                ['consume_status' => self::CONSUME_STATUS_SUCCESS],
+                $queueId, ['consume_status' => self::CONSUME_STATUS_SUCCESS],
             );
         } catch (\Exception $e) {
             $this->service->update(
-                $queueId,
-                [
+                $queueId, [
                     'consume_status' => self::CONSUME_STATUS_FAIL,
-                    'log_content' => $e->getMessage(),
+                    'log_content'    => $e->getMessage(),
                 ],
             );
         }

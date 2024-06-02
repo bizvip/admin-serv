@@ -9,6 +9,6 @@ return [
     'default' => [
         'driver' => RedisDriver::class,
         'packer' => PhpSerializerPacker::class,
-        'prefix' => 'MineAdmin:',
+        'prefix' => 'c:',
     ],
 ];

@@ -22,7 +22,7 @@ return [
         'prefix'               => env('DB_PREFIX', ''),
         'pool'                 => [
             'min_connections' => 1,
-            'max_connections' => 20,
+            'max_connections' => 64,
             'connect_timeout' => 10.0,
             'wait_timeout'    => 3.0,
             'heartbeat'       => -1,
@@ -30,7 +30,7 @@ return [
         ],
         'cache'                => [
             'handler'           => RedisHandler::class,
-            'cache_key'         => 'MineAdmin:%s:m:%s:%s:%s',
+            'cache_key'         => 'c:%s:m:%s:%s:%s',
             'prefix'            => 'model-cache',
             'ttl'               => 86400 * 7,
             'empty_model_ttl'   => 60,

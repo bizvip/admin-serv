@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Model;
 
@@ -11,29 +19,29 @@ use Hyperf\Database\Model\SoftDeletes;
 use Mine\MineModel;
 
 /**
- * @property int                          $id              用户ID，主键
- * @property string                       $username        用户名
- * @property string                       $user_type       用户类型：(100系统用户)
- * @property string                       $nickname        用户昵称
- * @property string                       $phone           手机
- * @property string                       $email           用户邮箱
- * @property string                       $avatar          用户头像
- * @property string                       $signed          个人签名
- * @property string                       $dashboard       后台首页类型
- * @property int                          $status          状态 (1正常 2停用)
- * @property string                       $login_ip        最后登陆IP
- * @property string                       $login_time      最后登陆时间
- * @property string                       $backend_setting 后台设置数据
- * @property int                          $created_by      创建者
- * @property int                          $updated_by      更新者
- * @property Carbon                       $created_at      创建时间
- * @property Carbon                       $updated_at      更新时间
- * @property string                       $deleted_at      删除时间
- * @property string                       $remark          备注
+ * @property int $id 用户ID，主键
+ * @property string $username 用户名
+ * @property string $user_type 用户类型：(100系统用户)
+ * @property string $nickname 用户昵称
+ * @property string $phone 手机
+ * @property string $email 用户邮箱
+ * @property string $avatar 用户头像
+ * @property string $signed 个人签名
+ * @property string $dashboard 后台首页类型
+ * @property int $status 状态 (1正常 2停用)
+ * @property string $login_ip 最后登陆IP
+ * @property string $login_time 最后登陆时间
+ * @property string $backend_setting 后台设置数据
+ * @property int $created_by 创建者
+ * @property int $updated_by 更新者
+ * @property Carbon $created_at 创建时间
+ * @property Carbon $updated_at 更新时间
+ * @property string $deleted_at 删除时间
+ * @property string $remark 备注
  * @property null|Collection|SystemRole[] $roles
  * @property null|Collection|SystemPost[] $posts
  * @property null|Collection|SystemDept[] $depts
- * @property mixed                        $password        密码
+ * @property mixed $password 密码
  */
 class SystemUser extends MineModel
 {
@@ -83,12 +91,12 @@ class SystemUser extends MineModel
      * The attributes that should be cast to native types.
      */
     protected array $casts = [
-        'id'              => 'integer',
-        'status'          => 'integer',
-        'created_by'      => 'integer',
-        'updated_by'      => 'integer',
-        'created_at'      => 'datetime',
-        'updated_at'      => 'datetime',
+        'id' => 'integer',
+        'status' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'backend_setting' => 'json',
     ];
 

@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller\DataCenter;
 
@@ -98,7 +106,7 @@ class NoticeController extends MineController
     #[DeleteMapping('delete'), Permission('system:notice:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -109,7 +117,7 @@ class NoticeController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:notice:realDelete'), OperationLog]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -120,7 +128,7 @@ class NoticeController extends MineController
     #[PutMapping('recovery'), Permission('system:notice:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

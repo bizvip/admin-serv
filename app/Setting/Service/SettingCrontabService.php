@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Service;
 
@@ -28,7 +36,7 @@ class SettingCrontabService extends AbstractService
         SettingCrontabMapper $mapper,
         MineExecutor $mineExecutor,
     ) {
-        $this->mapper       = $mapper;
+        $this->mapper = $mapper;
         $this->mineExecutor = $mineExecutor;
     }
 
@@ -69,9 +77,9 @@ class SettingCrontabService extends AbstractService
     public function run(mixed $id): ?bool
     {
         $crontab = new MineCrontab();
-        $model   = $this->read($id);
+        $model = $this->read($id);
         $crontab->setCallback($model->target);
-        $crontab->setType((string)$model->type);
+        $crontab->setType((string) $model->type);
         $crontab->setEnable(true);
         $crontab->setCrontabId($model->id);
         $crontab->setName($model->name);

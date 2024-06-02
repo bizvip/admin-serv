@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Mapper;
 
@@ -46,7 +54,8 @@ class SettingConfigMapper extends AbstractMapper
         $prefix = env('DB_PREFIX');
 
         return $this->model::query()->whereRaw(
-            sprintf('group_id = ( SELECT id FROM %ssetting_config_group WHERE code = ? )', $prefix), [$groupKey],
+            sprintf('group_id = ( SELECT id FROM %ssetting_config_group WHERE code = ? )', $prefix),
+            [$groupKey],
         )->get()->toArray();
     }
 
@@ -68,8 +77,8 @@ class SettingConfigMapper extends AbstractMapper
     public function updateByKey(string $key, mixed $value = null): bool
     {
         return $this->model::query()->where('key', $key)->update([
-                'value' => is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE) : $value,
-            ]) > 0;
+            'value' => is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE) : $value,
+        ]) > 0;
     }
 
     /**

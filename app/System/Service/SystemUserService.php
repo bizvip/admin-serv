@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -52,10 +60,10 @@ class SystemUserService extends AbstractService implements UserServiceInterface
         SystemMenuService $systemMenuService,
         SystemRoleService $systemRoleService,
     ) {
-        $this->mapper         = $mapper;
+        $this->mapper = $mapper;
         $this->sysMenuService = $systemMenuService;
         $this->sysRoleService = $systemRoleService;
-        $this->container      = $container;
+        $this->container = $container;
     }
 
     /**
@@ -81,7 +89,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
         if ($this->mapper->existsByUsername($data['username'])) {
             throw new NormalStatusException(t('system.username_exists'));
         }
-        $id         = $this->mapper->save($this->handleData($data));
+        $id = $this->mapper->save($this->handleData($data));
         $data['id'] = $id;
         event(new UserAdd($data));
 
@@ -112,17 +120,17 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     public function getOnlineUserPageList(array $params = []): array
     {
-        $redis     = redis();
-        $key       = sprintf('%sToken:*', config('cache.default.prefix'));
-        $jwt       = $this->container->get(JWT::class);
+        $redis = redis();
+        $key = sprintf('%sToken:*', config('cache.default.prefix'));
+        $jwt = $this->container->get(JWT::class);
         $blackList = $this->container->get(JWT::class)->blackList;
-        $userIds   = [];
-        $iterator  = null;
+        $userIds = [];
+        $iterator = null;
 
         while (false !== ($users = $redis->scan($iterator, $key, 100))) {
             foreach ($users as $user) {
                 // 如果是已经加入到黑名单的就代表不是登录状态了
-                if (!$this->hasTokenBlack($redis->get($user)) && preg_match("/{$key}(\\d+)$/", $user, $match) && isset($match[1])) {
+                if (! $this->hasTokenBlack($redis->get($user)) && preg_match("/{$key}(\\d+)$/", $user, $match) && isset($match[1])) {
                     $userIds[] = $match[1];
                 }
             }
@@ -143,7 +151,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     public function delete(array $ids): bool
     {
-        if (!empty($ids)) {
+        if (! empty($ids)) {
             if (($key = array_search(env('SUPER_ADMIN'), $ids)) !== false) {
                 unset($ids[$key]);
             }
@@ -163,7 +171,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     public function realDelete(array $ids): bool
     {
-        if (!empty($ids)) {
+        if (! empty($ids)) {
             if (($key = array_search(env('SUPER_ADMIN'), $ids)) !== false) {
                 unset($ids[$key]);
             }
@@ -186,9 +194,9 @@ class SystemUserService extends AbstractService implements UserServiceInterface
     public function kickUser(string $id): bool
     {
         $redis = redis();
-        $key   = sprintf('%sToken:%s', config('cache.default.prefix'), $id);
+        $key = sprintf('%sToken:%s', config('cache.default.prefix'), $id);
         $token = $redis->get($key);
-        if (!is_string($token)) {
+        if (! is_string($token)) {
             throw new MineException(t('system.not_user_token'));
         }
         user()->getJwt()->logout($redis->get($key), 'default');
@@ -213,7 +221,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     public function clearCache(string $id): bool
     {
-        $redis  = redis();
+        $redis = redis();
         $prefix = config('cache.default.prefix');
 
         $iterator = null;
@@ -237,10 +245,10 @@ class SystemUserService extends AbstractService implements UserServiceInterface
     public function setHomePage(array $params): bool
     {
         $res = ($this->mapper->getModel())::query()
-                ->where('id', $params['id'])
-                ->update(['dashboard' => $params['dashboard']]) > 0;
+            ->where('id', $params['id'])
+            ->update(['dashboard' => $params['dashboard']]) > 0;
 
-        $this->clearCache((string)$params['id']);
+        $this->clearCache((string) $params['id']);
 
         return $res;
     }
@@ -253,7 +261,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     public function updateInfo(array $params): bool
     {
-        if (!isset($params['id'])) {
+        if (! isset($params['id'])) {
             return false;
         }
 
@@ -263,7 +271,7 @@ class SystemUserService extends AbstractService implements UserServiceInterface
             $model[$key] = $param;
         }
 
-        $this->clearCache((string)$model['id']);
+        $this->clearCache((string) $model['id']);
 
         return $model->save();
     }
@@ -294,19 +302,19 @@ class SystemUserService extends AbstractService implements UserServiceInterface
         $user->addHidden('deleted_at', 'password');
         $data['user'] = $user->toArray();
         if (user()->isSuperAdmin()) {
-            $data['roles']   = ['rooter'];
+            $data['roles'] = ['rooter'];
             $data['routers'] = $this->sysMenuService->mapper->getSuperAdminRouters();
-            $data['codes']   = ['*'];
+            $data['codes'] = ['*'];
         } else {
-            $roles           = $this->sysRoleService->mapper->getMenuIdsByRoleIds(
+            $roles = $this->sysRoleService->mapper->getMenuIdsByRoleIds(
                 $user->roles()
                     ->pluck('id')
                     ->toArray(),
             );
-            $ids             = $this->filterMenuIds($roles);
-            $data['roles']   = $user->roles()->pluck('code')->toArray();
+            $ids = $this->filterMenuIds($roles);
+            $data['roles'] = $user->roles()->pluck('code')->toArray();
             $data['routers'] = $this->sysMenuService->mapper->getRoutersByIds($ids);
-            $data['codes']   = $this->sysMenuService->mapper->getMenuCode($ids);
+            $data['codes'] = $this->sysMenuService->mapper->getMenuCode($ids);
         }
 
         return $data;
@@ -334,16 +342,16 @@ class SystemUserService extends AbstractService implements UserServiceInterface
      */
     protected function handleData(array $data): array
     {
-        if (!is_array($data['role_ids'])) {
+        if (! is_array($data['role_ids'])) {
             $data['role_ids'] = explode(',', $data['role_ids']);
         }
         if (($key = array_search(env('ADMIN_ROLE'), $data['role_ids'])) !== false) {
             unset($data['role_ids'][$key]);
         }
-        if (!empty($data['post_ids']) && !is_array($data['post_ids'])) {
+        if (! empty($data['post_ids']) && ! is_array($data['post_ids'])) {
             $data['post_ids'] = explode(',', $data['post_ids']);
         }
-        if (!empty($data['dept_ids']) && !is_array($data['dept_ids'])) {
+        if (! empty($data['dept_ids']) && ! is_array($data['dept_ids'])) {
             $data['dept_ids'] = explode(',', $data['dept_ids']);
         }
 
@@ -352,12 +360,13 @@ class SystemUserService extends AbstractService implements UserServiceInterface
 
     private function hasTokenBlack(string $token): bool
     {
-        $jwt    = $this->container->get(JWT::class);
+        $jwt = $this->container->get(JWT::class);
         $scenes = array_keys(config('jwt.scene'));
         foreach ($scenes as $scene) {
             $sceneJwt = $jwt->setScene($scene);
             if ($sceneJwt->blackList->hasTokenBlack(
-                $sceneJwt->getParserData($token), $jwt->getSceneConfig($scene),
+                $sceneJwt->getParserData($token),
+                $jwt->getSceneConfig($scene),
             )) {
                 return true;
             }

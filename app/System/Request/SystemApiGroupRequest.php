@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -45,7 +53,7 @@ class SystemApiGroupRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id'     => 'required',
+            'id' => 'required',
             'status' => 'required',
         ];
     }
@@ -57,8 +65,8 @@ class SystemApiGroupRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'     => '组ID',
-            'name'   => '组名称',
+            'id' => '组ID',
+            'name' => '组名称',
             'status' => '组状态',
         ];
     }

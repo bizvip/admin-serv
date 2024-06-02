@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Listener;
 
@@ -37,19 +45,19 @@ class LoginListener implements ListenerInterface
     {
         $request = container()->get(MineRequest::class);
         $service = container()->get(SystemLoginLogService::class);
-        $redis   = redis();
+        $redis = redis();
 
         $agent = $request->getHeader('user-agent')[0] ?? 'unknown';
-        $ip    = $request->ip();
+        $ip = $request->ip();
         $service->save([
-            'username'    => $event->userinfo['username'],
-            'ip'          => $ip,
+            'username' => $event->userinfo['username'],
+            'ip' => $ip,
             'ip_location' => Str::ipToRegion($ip),
-            'os'          => $this->os($agent),
-            'browser'     => $this->browser($agent),
-            'status'      => $event->loginStatus ? SystemLoginLog::SUCCESS : SystemLoginLog::FAIL,
-            'message'     => $event->message,
-            'login_time'  => date('Y-m-d H:i:s'),
+            'os' => $this->os($agent),
+            'browser' => $this->browser($agent),
+            'status' => $event->loginStatus ? SystemLoginLog::SUCCESS : SystemLoginLog::FAIL,
+            'message' => $event->message,
+            'login_time' => date('Y-m-d H:i:s'),
         ]);
 
         $key = sprintf('%sToken:%s', config('cache.default.prefix'), $event->userinfo['id']);
@@ -58,11 +66,11 @@ class LoginListener implements ListenerInterface
         ($event->loginStatus && $event->token) && $redis->set($key, $event->token, config('jwt.ttl'));
 
         if ($event->loginStatus) {
-            $event->userinfo['login_ip']   = $ip;
+            $event->userinfo['login_ip'] = $ip;
             $event->userinfo['login_time'] = date('Y-m-d H:i:s');
 
             SystemUser::query()->where('id', $event->userinfo['id'])->update([
-                'login_ip'   => $ip,
+                'login_ip' => $ip,
                 'login_time' => date('Y-m-d H:i:s'),
             ]);
         }

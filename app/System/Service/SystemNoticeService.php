@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -53,9 +61,9 @@ class SystemNoticeService extends AbstractService
         $userIds = $data['users'] ?? [];
         if (empty($userIds)) {
             $userMapper = container()->get(SystemUserMapper::class);
-            $userIds    = $userMapper->pluck(['status' => MineModel::ENABLE]);
+            $userIds = $userMapper->pluck(['status' => MineModel::ENABLE]);
         }
-        $data['message_id'] = context_get('id') ?? (string)$this->idGenerator->generate();
+        $data['message_id'] = context_get('id') ?? (string) $this->idGenerator->generate();
 
         return parent::save($data);
     }

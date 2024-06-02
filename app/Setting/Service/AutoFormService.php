@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Service;
 
@@ -182,7 +190,7 @@ class AutoFormService
      */
     public function delete(mixed $table_id, array $ids): bool
     {
-        return !empty($ids) && $this->mapper->delete($table_id, $ids);
+        return ! empty($ids) && $this->mapper->delete($table_id, $ids);
     }
 
     /**
@@ -206,7 +214,7 @@ class AutoFormService
      */
     public function realDelete(mixed $table_id, array $ids): bool
     {
-        return !empty($ids) && $this->mapper->realDelete($table_id, $ids);
+        return ! empty($ids) && $this->mapper->realDelete($table_id, $ids);
     }
 
     /**
@@ -214,7 +222,7 @@ class AutoFormService
      */
     public function recovery(mixed $table_id, array $ids): bool
     {
-        return !empty($ids) && $this->mapper->recovery($table_id, $ids);
+        return ! empty($ids) && $this->mapper->recovery($table_id, $ids);
     }
 
     /**
@@ -222,7 +230,7 @@ class AutoFormService
      */
     public function disable(mixed $table_id, array $ids, string $field = 'status'): bool
     {
-        return !empty($ids) && $this->mapper->disable($table_id, $ids, $field);
+        return ! empty($ids) && $this->mapper->disable($table_id, $ids, $field);
     }
 
     /**
@@ -230,7 +238,7 @@ class AutoFormService
      */
     public function enable(mixed $table_id, array $ids, string $field = 'status'): bool
     {
-        return !empty($ids) && $this->mapper->enable($table_id, $ids, $field);
+        return ! empty($ids) && $this->mapper->enable($table_id, $ids, $field);
     }
 
     /**
@@ -297,24 +305,24 @@ class AutoFormService
         $collect = $this->handleArraySearch(collect($this->getArrayData($params)), $params);
 
         $pageSize = MineModel::PAGE_SIZE;
-        $page     = 1;
+        $page = 1;
 
         if ($params[$pageName] ?? false) {
-            $page = (int)$params[$pageName];
+            $page = (int) $params[$pageName];
         }
 
         if ($params['pageSize'] ?? false) {
-            $pageSize = (int)$params['pageSize'];
+            $pageSize = (int) $params['pageSize'];
         }
 
         $data = $collect->forPage($page, $pageSize)->toArray();
 
         return [
-            'items'    => $this->getCurrentArrayPageBefore($data, $params),
+            'items' => $this->getCurrentArrayPageBefore($data, $params),
             'pageInfo' => [
-                'total'       => $collect->count(),
+                'total' => $collect->count(),
                 'currentPage' => $page,
-                'totalPage'   => ceil($collect->count() / $pageSize),
+                'totalPage' => ceil($collect->count() / $pageSize),
             ],
         ];
     }

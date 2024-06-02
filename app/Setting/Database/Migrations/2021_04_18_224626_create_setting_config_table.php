@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -31,8 +38,8 @@ class CreateSettingConfigTable extends Migration
             ])->nullable();
             $table->addColumn('smallInteger', 'sort', [
                 'unsigned' => true,
-                'default'  => 0,
-                'comment'  => '排序',
+                'default' => 0,
+                'comment' => '排序',
             ]);
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

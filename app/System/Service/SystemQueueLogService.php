@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -77,7 +85,7 @@ class SystemQueueLogService extends AbstractService implements QueueLogServiceIn
 
         $class = $amqpQueueVo->getProducer();
 
-        if (!isset($producer['_c']['Hyperf\Amqp\Annotation\Producer'])) {
+        if (! isset($producer['_c']['Hyperf\Amqp\Annotation\Producer'])) {
             throw new NormalStatusException(t('system.queue_annotation_not_open'), 500);
         }
 
@@ -95,7 +103,7 @@ class SystemQueueLogService extends AbstractService implements QueueLogServiceIn
         $producer = AnnotationCollector::get(MessageProducer::class);
         $consumer = AnnotationCollector::get(MessageConsumer::class);
 
-        if (!isset($producer['_c']['Hyperf\Amqp\Annotation\Producer']) || !isset($consumer['_c']['Hyperf\Amqp\Annotation\Consumer'])) {
+        if (! isset($producer['_c']['Hyperf\Amqp\Annotation\Producer']) || ! isset($consumer['_c']['Hyperf\Amqp\Annotation\Consumer'])) {
             throw new NormalStatusException(t('system.queue_annotation_not_open'), 500);
         }
 
@@ -114,28 +122,28 @@ class SystemQueueLogService extends AbstractService implements QueueLogServiceIn
         if (empty($receiveUsers)) {
             $receiveUsers = $this->userService->pluck(['status' => SystemUser::USER_NORMAL], 'id');
         }
-        $data      = [
-            'title'         => $message->getTitle(),
-            'content'       => $message->getContent(),
-            'content_type'  => $message->getContentType(),
-            'send_by'       => $message->getSendBy() ?: user()->getId(),
+        $data = [
+            'title' => $message->getTitle(),
+            'content' => $message->getContent(),
+            'content_type' => $message->getContentType(),
+            'send_by' => $message->getSendBy() ?: user()->getId(),
             'receive_users' => $receiveUsers,
         ];
-        $producer  = new MessageProducer($data);
+        $producer = new MessageProducer($data);
         $queueName = strchr($producer->getRoutingKey(), '.', true) . '.queue';
-        $id        = $this->save([
-            'exchange_name'    => $producer->getExchange(),
+        $id = $this->save([
+            'exchange_name' => $producer->getExchange(),
             'routing_key_name' => $producer->getRoutingKey(),
-            'queue_name'       => $queueName,
-            'queue_content'    => $producer->payload(),
-            'delay_time'       => 0,
-            'produce_status'   => self::PRODUCE_STATUS_SUCCESS,
+            'queue_name' => $queueName,
+            'queue_content' => $producer->payload(),
+            'delay_time' => 0,
+            'produce_status' => self::PRODUCE_STATUS_SUCCESS,
         ]);
-        $payload   = Json::decode($producer->payload());
+        $payload = Json::decode($producer->payload());
 
         $producer->setPayload([
             'queue_id' => $id,
-            'data'     => $payload,
+            'data' => $payload,
         ]);
         $this->queueMessageService->save(
             $payload,
@@ -145,9 +153,9 @@ class SystemQueueLogService extends AbstractService implements QueueLogServiceIn
                 $producer,
             );
         } catch (\Exception $e) {
-            $this->update((int)$id, [
+            $this->update((int) $id, [
                 'produce_status' => self::PRODUCE_STATUS_FAIL,
-                'log_content'    => $e->getMessage(),
+                'log_content' => $e->getMessage(),
             ]);
             throw new NormalStatusException($e->getMessage(), 500);
         }

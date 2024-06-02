@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -25,7 +33,7 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
     /**
      * 成功连接到 ws 回调.
      * @param Response|Server $server
-     * @param Request         $request
+     * @param Request $request
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -37,14 +45,14 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
         Context::set('uid', $uid);
 
         console()->info(
-            "WebSocket [ user connection to message server: id > {$uid}, " . "fd > {$request->fd}, time > " . date('Y-m-d H:i:s') . ' ]',
+            "WebSocket [ user connection to message server: id > {$uid}, fd > {$request->fd}, time > " . date('Y-m-d H:i:s') . ' ]',
         );
     }
 
     /**
      * 消息回调.
      * @param Response|Server $server
-     * @param Frame           $frame
+     * @param Frame $frame
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -55,9 +63,9 @@ class ServerController implements OnMessageInterface, OnOpenInterface, OnCloseIn
             case 'get_unread_message':
                 $service = container()->get(SystemQueueMessageService::class);
                 $server->push($frame->fd, json_encode([
-                    'event'   => 'ev_new_message',
+                    'event' => 'ev_new_message',
                     'message' => 'success',
-                    'data'    => $service->getUnreadMessage(Context::get('uid'))['items'],
+                    'data' => $service->getUnreadMessage(Context::get('uid'))['items'],
                 ]));
                 break;
         }

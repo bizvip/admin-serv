@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Listener;
 
@@ -32,9 +40,9 @@ class UserDeleteListener implements ListenerInterface
      */
     public function process(object $event): void
     {
-        $redis  = redis();
+        $redis = redis();
         $prefix = config('cache.default.prefix') . 'Token:';
-        $user   = user();
+        $user = user();
 
         /* @var $event UserDelete */
         foreach ($event->ids as $uid) {

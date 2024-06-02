@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Request;
 
@@ -14,14 +22,14 @@ class SettingConfigRequest extends MineFormRequest
     public function commonRules(): array
     {
         return [
-            'group_id'           => 'required',
-            'key'                => 'required|max:32',
-            'name'               => 'required|max:255',
-            'value'              => '',
-            'input_type'         => '',
+            'group_id' => 'required',
+            'key' => 'required|max:32',
+            'name' => 'required|max:255',
+            'value' => '',
+            'input_type' => '',
             'config_select_data' => '',
-            'sort'               => '',
-            'remark'             => '',
+            'sort' => '',
+            'remark' => '',
         ];
     }
 
@@ -49,8 +57,8 @@ class SettingConfigRequest extends MineFormRequest
     {
         return [
             'group_id' => '组ID',
-            'key'      => '配置键名',
-            'name'     => '配置名称',
+            'key' => '配置键名',
+            'name' => '配置名称',
         ];
     }
 }

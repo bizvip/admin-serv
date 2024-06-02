@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -47,7 +55,7 @@ class SystemRoleRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id'     => 'required',
+            'id' => 'required',
             'status' => 'required',
         ];
     }
@@ -59,9 +67,9 @@ class SystemRoleRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'     => '角色ID',
-            'name'   => '角色名称',
-            'code'   => '角色标识',
+            'id' => '角色ID',
+            'name' => '角色名称',
+            'code' => '角色标识',
             'status' => '角色状态',
         ];
     }

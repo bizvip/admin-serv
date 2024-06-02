@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller\Monitor;
 
@@ -50,6 +58,6 @@ class OnlineUserMonitorController extends MineController
     #[PostMapping('kick'), Permission('system:onlineUser:kick')]
     public function kickUser(): ResponseInterface
     {
-        return $this->service->kickUser((string)$this->request->input('id')) ? $this->success() : $this->error();
+        return $this->service->kickUser((string) $this->request->input('id')) ? $this->success() : $this->error();
     }
 }

@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -23,8 +31,8 @@ class SystemNoticeRequest extends MineFormRequest
     public function saveRules(): array
     {
         return [
-            'title'   => 'required',
-            'type'    => 'required',
+            'title' => 'required',
+            'type' => 'required',
             'content' => 'required',
         ];
     }
@@ -36,8 +44,8 @@ class SystemNoticeRequest extends MineFormRequest
     public function updateRules(): array
     {
         return [
-            'title'   => 'required',
-            'type'    => 'required',
+            'title' => 'required',
+            'type' => 'required',
             'content' => 'required',
         ];
     }
@@ -49,8 +57,8 @@ class SystemNoticeRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'title'   => '公告标题',
-            'type'    => '公告类型',
+            'title' => '公告标题',
+            'type' => '公告类型',
             'content' => '公告内容',
         ];
     }

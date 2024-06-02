@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -34,7 +42,7 @@ class SystemDeptRequest extends MineFormRequest
     public function addLeaderRules(): array
     {
         return [
-            'id'    => 'required',
+            'id' => 'required',
             'users' => 'required',
         ];
     }
@@ -46,7 +54,7 @@ class SystemDeptRequest extends MineFormRequest
     public function delLeaderRules(): array
     {
         return [
-            'id'  => 'required',
+            'id' => 'required',
             'ids' => 'array',
         ];
     }
@@ -69,7 +77,7 @@ class SystemDeptRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id'     => 'required',
+            'id' => 'required',
             'status' => 'required',
         ];
     }
@@ -81,10 +89,10 @@ class SystemDeptRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'     => '部门ID',
-            'name'   => '部门名称',
+            'id' => '部门ID',
+            'name' => '部门名称',
             'status' => '部门状态',
-            'users'  => '用户信息',
+            'users' => '用户信息',
         ];
     }
 }

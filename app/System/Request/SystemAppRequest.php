@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Request;
 
@@ -23,9 +31,9 @@ class SystemAppRequest extends MineFormRequest
     public function saveRules(): array
     {
         return [
-            'group_id'   => 'required',
-            'app_name'   => 'required',
-            'app_id'     => 'required',
+            'group_id' => 'required',
+            'app_name' => 'required',
+            'app_id' => 'required',
             'app_secret' => 'required',
         ];
     }
@@ -37,9 +45,9 @@ class SystemAppRequest extends MineFormRequest
     public function updateRules(): array
     {
         return [
-            'group_id'   => 'required',
-            'app_name'   => 'required',
-            'app_id'     => 'required',
+            'group_id' => 'required',
+            'app_name' => 'required',
+            'app_id' => 'required',
             'app_secret' => 'required',
         ];
     }
@@ -51,7 +59,7 @@ class SystemAppRequest extends MineFormRequest
     public function changeStatusRules(): array
     {
         return [
-            'id'     => 'required',
+            'id' => 'required',
             'status' => 'required',
         ];
     }
@@ -63,12 +71,12 @@ class SystemAppRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'         => '应用ID',
-            'group_id'   => '应用分组',
-            'app_name'   => '应用名称',
-            'app_id'     => 'APP ID',
+            'id' => '应用ID',
+            'group_id' => '应用分组',
+            'app_name' => '应用名称',
+            'app_id' => 'APP ID',
             'app_secret' => 'APP SECRET',
-            'status'     => '应用状态',
+            'status' => '应用状态',
         ];
     }
 }

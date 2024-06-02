@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Controller\Tools;
 
@@ -95,7 +103,7 @@ class GenerateCodeController extends MineController
     #[GetMapping('preview'), Permission('setting:code:preview')]
     public function preview(): ResponseInterface
     {
-        return $this->success($this->tableService->preview((int)$this->request->input('id', 0)));
+        return $this->success($this->tableService->preview((int) $this->request->input('id', 0)));
     }
 
     /**
@@ -106,7 +114,7 @@ class GenerateCodeController extends MineController
     #[GetMapping('readTable')]
     public function readTable(): ResponseInterface
     {
-        return $this->success($this->tableService->read((int)$this->request->input('id')));
+        return $this->success($this->tableService->read((int) $this->request->input('id')));
     }
 
     /**
@@ -129,7 +137,8 @@ class GenerateCodeController extends MineController
     public function generate(): ResponseInterface
     {
         return $this->_download(
-            $this->tableService->generate((array)$this->request->input('ids', [])), 'mineadmin.zip',
+            $this->tableService->generate((array) $this->request->input('ids', [])),
+            'mineadmin.zip',
         );
     }
 
@@ -152,7 +161,7 @@ class GenerateCodeController extends MineController
     #[DeleteMapping('delete'), Permission('setting:code:delete'), OperationLog]
     public function delete(): ResponseInterface
     {
-        return $this->tableService->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->tableService->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**

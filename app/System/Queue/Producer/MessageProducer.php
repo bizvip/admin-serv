@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Queue\Producer;
 
@@ -24,7 +32,9 @@ class MessageProducer extends ProducerMessage
     {
         console()->info(
             sprintf(
-                'created queue message time at: %s, data is: %s', date('Y-m-d H:i:s'), (is_array($data) || is_object($data)) ? json_encode($data) : $data,
+                'created queue message time at: %s, data is: %s',
+                date('Y-m-d H:i:s'),
+                (is_array($data) || is_object($data)) ? json_encode($data) : $data,
             ),
         );
 

@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller;
 
@@ -75,7 +83,7 @@ class CommonController extends MineController
     #[PostMapping('getUserInfoByIds')]
     public function getUserInfoByIds(): ResponseInterface
     {
-        return $this->success($this->userService->getUserInfoByIds((array)$this->request->input('ids', [])));
+        return $this->success($this->userService->getUserInfoByIds((array) $this->request->input('ids', [])));
     }
 
     /**
@@ -158,7 +166,7 @@ class CommonController extends MineController
     #[GetMapping('clearAllCache')]
     public function clearAllCache(): ResponseInterface
     {
-        $this->userService->clearCache((string)user()->getId());
+        $this->userService->clearCache((string) user()->getId());
 
         return $this->success();
     }

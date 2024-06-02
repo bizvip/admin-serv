@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Controller\Settings;
 
@@ -63,7 +71,7 @@ class SystemConfigGroupController extends MineController
     #[PostMapping('update'), Permission('setting:config:update'), OperationLog('更新配置组')]
     public function update(SettingConfigGroupRequest $request): ResponseInterface
     {
-        return $this->service->update((int)$this->request->input('id'), $request->validated()) ? $this->success() : $this->error();
+        return $this->service->update((int) $this->request->input('id'), $request->validated()) ? $this->success() : $this->error();
     }
 
     /**
@@ -74,7 +82,7 @@ class SystemConfigGroupController extends MineController
     #[DeleteMapping('delete'), Permission('setting:config:delete'), OperationLog('删除配置组')]
     public function delete(): ResponseInterface
     {
-        return $this->service->deleteConfigGroup((int)$this->request->input('id')) ? $this->success() : $this->error();
+        return $this->service->deleteConfigGroup((int) $this->request->input('id')) ? $this->success() : $this->error();
     }
 
     /**

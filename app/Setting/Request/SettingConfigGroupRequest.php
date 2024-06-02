@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Request;
 
@@ -44,7 +52,7 @@ class SettingConfigGroupRequest extends MineFormRequest
     public function attributes(): array
     {
         return [
-            'id'   => '主键',
+            'id' => '主键',
             'name' => '配置组名称',
             'code' => '配置组标识',
         ];

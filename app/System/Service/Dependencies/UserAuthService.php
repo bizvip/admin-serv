@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service\Dependencies;
 
@@ -47,19 +55,19 @@ class UserAuthService implements UserServiceInterface
             if ($mapper->checkPass($userServiceVo->getPassword(), $password)) {
                 if (($userinfo['status'] == SystemUser::USER_NORMAL) || ($userinfo['status'] == SystemUser::USER_BAN && $userinfo['id'] == env('SUPER_ADMIN'))) {
                     $userLoginAfter->message = t('jwt.login_success');
-                    $token                   = user()->getToken($userLoginAfter->userinfo);
-                    $userLoginAfter->token   = $token;
+                    $token = user()->getToken($userLoginAfter->userinfo);
+                    $userLoginAfter->token = $token;
                     event($userLoginAfter);
 
                     return $token;
                 }
                 $userLoginAfter->loginStatus = false;
-                $userLoginAfter->message     = t('jwt.user_ban');
+                $userLoginAfter->message = t('jwt.user_ban');
                 event($userLoginAfter);
                 throw new UserBanException();
             }
             $userLoginAfter->loginStatus = false;
-            $userLoginAfter->message     = t('jwt.login_error');
+            $userLoginAfter->message = t('jwt.login_error');
             event($userLoginAfter);
             throw new NormalStatusException();
         } catch (\Exception $e) {

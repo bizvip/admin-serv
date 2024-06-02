@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Service;
 
@@ -28,7 +36,7 @@ class SettingConfigService extends AbstractService implements ConfigServiceInter
         SettingConfigMapper $mapper,
         EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->mapper     = $mapper;
+        $this->mapper = $mapper;
         $this->dispatcher = $eventDispatcher;
     }
 
@@ -76,12 +84,13 @@ class SettingConfigService extends AbstractService implements ConfigServiceInter
         foreach ($data as $name => $value) {
             $this->dispatcher->dispatch(
                 new DeleteListenerEvent(
-                    'system-config-update', [
-                        (string)$name,
+                    'system-config-update',
+                    [
+                        (string) $name,
                     ],
                 ),
             );
-            $this->mapper->updateByKey((string)$name, $value);
+            $this->mapper->updateByKey((string) $name, $value);
         }
 
         return true;

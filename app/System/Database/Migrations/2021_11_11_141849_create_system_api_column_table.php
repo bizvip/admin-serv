@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -19,7 +26,7 @@ class CreateSystemApiColumnTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('bigInteger', 'api_id', [
                 'unsigned' => true,
-                'comment'  => '接口主键',
+                'comment' => '接口主键',
             ]);
             $table->addColumn('string', 'name', ['length' => 64, 'comment' => '字段名称']);
             $table->addColumn('smallInteger', 'type', [
@@ -43,15 +50,15 @@ class CreateSystemApiColumnTable extends Migration
             $table->addColumn('bigInteger', 'updated_by', ['comment' => '更新者'])->nullable();
             $table->addColumn('timestamp', 'created_at', [
                 'precision' => 0,
-                'comment'   => '创建时间',
+                'comment' => '创建时间',
             ])->nullable();
             $table->addColumn('timestamp', 'updated_at', [
                 'precision' => 0,
-                'comment'   => '更新时间',
+                'comment' => '更新时间',
             ])->nullable();
             $table->addColumn('timestamp', 'deleted_at', [
                 'precision' => 0,
-                'comment'   => '删除时间',
+                'comment' => '删除时间',
             ])->nullable();
             $table->addColumn('string', 'remark', ['length' => 255, 'comment' => '备注'])
                 ->nullable();

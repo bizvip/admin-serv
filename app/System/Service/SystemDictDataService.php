@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Service;
 
@@ -34,12 +42,12 @@ class SystemDictDataService extends AbstractService implements DictDataServiceIn
      */
     public function getLists(?array $params = null): array
     {
-        if (!isset($params['codes'])) {
+        if (! isset($params['codes'])) {
             return [];
         }
 
         $codes = explode(',', $params['codes']);
-        $data  = [];
+        $data = [];
 
         foreach ($codes as $code) {
             $data[$code] = $this->getList(['code' => $code]);
@@ -55,9 +63,9 @@ class SystemDictDataService extends AbstractService implements DictDataServiceIn
     public function getList(?array $params = null, bool $isScope = false): array
     {
         $args = [
-            'select'    => ['id', 'label as title', 'value as key'],
-            'status'    => MineModel::ENABLE,
-            'orderBy'   => 'sort',
+            'select' => ['id', 'label as title', 'value as key'],
+            'status' => MineModel::ENABLE,
+            'orderBy' => 'sort',
             'orderType' => 'desc',
         ];
 

@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Mapper;
 
@@ -42,7 +50,8 @@ class SystemLoginLogMapper extends AbstractMapper
 
         if (isset($params['login_time']) && filled($params['login_time']) && is_array($params['login_time']) && count($params['login_time']) == 2) {
             $query->whereBetween(
-                'login_time', [
+                'login_time',
+                [
                     $params['login_time'][0] . ' 00:00:00',
                     $params['login_time'][1] . ' 23:59:59',
                 ],

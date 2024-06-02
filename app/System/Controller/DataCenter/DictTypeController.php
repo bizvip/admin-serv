@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\System\Controller\DataCenter;
 
@@ -97,7 +105,7 @@ class DictTypeController extends MineController
     #[DeleteMapping('delete'), Permission('system:dict:delete')]
     public function delete(): ResponseInterface
     {
-        return $this->service->delete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->delete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -108,7 +116,7 @@ class DictTypeController extends MineController
     #[DeleteMapping('realDelete'), Permission('system:dict:realDelete'), OperationLog('删除字典类型')]
     public function realDelete(): ResponseInterface
     {
-        return $this->service->realDelete((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->realDelete((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -119,7 +127,7 @@ class DictTypeController extends MineController
     #[PutMapping('recovery'), Permission('system:dict:recovery')]
     public function recovery(): ResponseInterface
     {
-        return $this->service->recovery((array)$this->request->input('ids', [])) ? $this->success() : $this->error();
+        return $this->service->recovery((array) $this->request->input('ids', [])) ? $this->success() : $this->error();
     }
 
     /**
@@ -130,7 +138,7 @@ class DictTypeController extends MineController
     #[PutMapping('changeStatus'), Permission('system:dict:update'), OperationLog('修改字典类型状态')]
     public function changeStatus(SystemDictTypeRequest $request): ResponseInterface
     {
-        return $this->service->changeStatus((int)$this->request->input('id'), (string)$this->request->input('status')) ? $this->success() : $this->error();
+        return $this->service->changeStatus((int) $this->request->input('id'), (string) $this->request->input('status')) ? $this->success() : $this->error();
     }
 
     /**

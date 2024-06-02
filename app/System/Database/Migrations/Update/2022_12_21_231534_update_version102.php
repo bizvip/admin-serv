@@ -1,7 +1,14 @@
 <?php
 
 declare(strict_types=1);
-
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
@@ -27,11 +34,11 @@ class UpdateVersion102 extends Migration
             $table->comment('用户与部门关联表');
             $table->addColumn('bigInteger', 'user_id', [
                 'unsigned' => true,
-                'comment'  => '用户主键',
+                'comment' => '用户主键',
             ]);
             $table->addColumn('bigInteger', 'dept_id', [
                 'unsigned' => true,
-                'comment'  => '部门主键',
+                'comment' => '部门主键',
             ]);
             $table->primary(['user_id', 'dept_id']);
         });
@@ -42,11 +49,11 @@ class UpdateVersion102 extends Migration
             $table->comment('部门领导表');
             $table->addColumn('bigInteger', 'dept_id', [
                 'unsigned' => true,
-                'comment'  => '部门主键',
+                'comment' => '部门主键',
             ]);
             $table->addColumn('bigInteger', 'user_id', [
                 'unsigned' => true,
-                'comment'  => '用户主键',
+                'comment' => '用户主键',
             ]);
             $table->addColumn('string', 'username', ['length' => 20, 'comment' => '用户名']);
             $table->timestamp('created_at')->comment('添加时间');
@@ -66,7 +73,7 @@ class UpdateVersion102 extends Migration
             if (Schema::hasColumn('system_user', 'dept_id')) {
                 $table->addColumn('bigInteger', 'dept_id', [
                     'unsigned' => true,
-                    'comment'  => '部门ID',
+                    'comment' => '部门ID',
                 ])->nullable();
             }
         });

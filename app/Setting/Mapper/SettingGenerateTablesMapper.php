@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of MineAdmin.
+ *
+ * @link     https://www.mineadmin.com
+ * @document https://doc.mineadmin.com
+ * @contact  root@imoi.cn
+ * @license  https://github.com/mineadmin/MineAdmin/blob/master/LICENSE
+ */
 
 namespace App\Setting\Mapper;
 
@@ -53,7 +61,8 @@ class SettingGenerateTablesMapper extends AbstractMapper
         }
         if (isset($params['minDate']) && filled($params['minDate']) && isset($params['maxDate']) && filled($params['maxDate'])) {
             $query->whereBetween(
-                'created_at', [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
+                'created_at',
+                [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
             );
         }
 

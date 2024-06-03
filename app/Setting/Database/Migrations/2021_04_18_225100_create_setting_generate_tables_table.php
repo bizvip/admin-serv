@@ -36,7 +36,9 @@ class CreateSettingGenerateTablesTable extends Migration
                 'comment' => '控制器包名',
             ])->nullable();
             $table->addColumn(
-                'string', 'type', [
+                'string',
+                'type',
+                [
                     'length'  => 100,
                     'comment' => '生成类型，single 单表CRUD，tree 树表CRUD，parent_sub父子表CRUD',
                 ],

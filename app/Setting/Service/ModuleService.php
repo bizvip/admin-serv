@@ -167,7 +167,9 @@ class ModuleService extends AbstractService implements ModuleServiceInterface
             $filePath = BASE_PATH . '/app/' . $data['name'] . '/config.json';
             $status   = $data['status'] ? 'true' : 'false';
             $content  = preg_replace(
-                '/\"enabled\":\s(true|false),/', '"enabled": ' . $status . ',', file_get_contents($filePath),
+                '/\"enabled\":\s(true|false),/',
+                '"enabled": ' . $status . ',',
+                file_get_contents($filePath),
             );
             $result   = (bool)file_put_contents($filePath, $content);
             $this->setModuleCache();

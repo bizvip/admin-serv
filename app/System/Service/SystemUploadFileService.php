@@ -124,7 +124,8 @@ class SystemUploadFileService extends AbstractService
         return container()->get(MineResponse::class)->responseImage(
             $this->mineUpload->getFileSystem()->read(
                 $this->mineUpload->getStorageMode() === '1' ? str_replace(env('UPLOAD_PATH', 'uploadfile'), '', $model->url) : $model->url,
-            ), $model->mime_type,
+            ),
+            $model->mime_type,
         );
     }
 

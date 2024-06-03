@@ -86,7 +86,8 @@ class SettingGenerateTablesService extends AbstractService
         }
         foreach ($params['names'] as $item) {
             $this->validatorFactory->validate(
-                data: $item, rules: [
+                data: $item,
+                rules: [
                     'name'    => 'required|string',
                     'comment' => 'required|string',
                 ],
@@ -197,7 +198,9 @@ class SettingGenerateTablesService extends AbstractService
                 $path = sprintf('%s/app/%s/Model/*', BASE_PATH, $item['name']);
                 foreach (glob($path) as $file) {
                     $models[] = sprintf(
-                        '\App\%s\Model\%s', $item['name'], str_replace('.php', '', basename($file)),
+                        '\App\%s\Model\%s',
+                        $item['name'],
+                        str_replace('.php', '', basename($file)),
                     );
                 }
             }
@@ -331,7 +334,8 @@ class SettingGenerateTablesService extends AbstractService
         $files = $fs->files($path);
         foreach ($files as $file) {
             $archive->addFile(
-                $path . '/' . $file->getFilename(), $file->getFilename(),
+                $path . '/' . $file->getFilename(),
+                $file->getFilename(),
             );
         }
         $this->addZipFile($archive, $path);
@@ -349,8 +353,11 @@ class SettingGenerateTablesService extends AbstractService
                 $files = $fs->files($directory);
                 foreach ($files as $file) {
                     $archive->addFile(
-                        $directory . '/' . $file->getFilename(), str_replace(
-                            BASE_PATH . '/runtime/generate/', '', $directory,
+                        $directory . '/' . $file->getFilename(),
+                        str_replace(
+                            BASE_PATH . '/runtime/generate/',
+                            '',
+                            $directory,
                         ) . '/' . $file->getFilename(),
                     );
                 }

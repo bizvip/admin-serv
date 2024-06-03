@@ -129,7 +129,8 @@ class GenerateCodeController extends MineController
     public function generate(): ResponseInterface
     {
         return $this->_download(
-            $this->tableService->generate((array)$this->request->input('ids', [])), 'mineadmin.zip',
+            $this->tableService->generate((array)$this->request->input('ids', [])),
+            'mineadmin.zip',
         );
     }
 

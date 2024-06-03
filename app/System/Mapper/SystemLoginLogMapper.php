@@ -42,7 +42,8 @@ class SystemLoginLogMapper extends AbstractMapper
 
         if (isset($params['login_time']) && filled($params['login_time']) && is_array($params['login_time']) && count($params['login_time']) == 2) {
             $query->whereBetween(
-                'login_time', [
+                'login_time',
+                [
                     $params['login_time'][0] . ' 00:00:00',
                     $params['login_time'][1] . ' 23:59:59',
                 ],

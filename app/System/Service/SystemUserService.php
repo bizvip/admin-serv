@@ -355,7 +355,8 @@ class SystemUserService extends AbstractService implements UserServiceInterface
         foreach ($scenes as $scene) {
             $sceneJwt = $jwt->setScene($scene);
             if ($sceneJwt->blackList->hasTokenBlack(
-                $sceneJwt->getParserData($token), $jwt->getSceneConfig($scene),
+                $sceneJwt->getParserData($token),
+                $jwt->getSceneConfig($scene),
             )) {
                 return true;
             }

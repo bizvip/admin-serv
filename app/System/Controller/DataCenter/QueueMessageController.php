@@ -75,7 +75,8 @@ class QueueMessageController extends MineController
     {
         return $this->success(
             $this->service->getReceiveUserList(
-                (int)$this->request->input('id', 0), $this->request->all(),
+                (int)$this->request->input('id', 0),
+                $this->request->all(),
             ),
         );
     }

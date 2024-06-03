@@ -46,7 +46,8 @@ class SettingConfigMapper extends AbstractMapper
         $prefix = env('DB_PREFIX');
 
         return $this->model::query()->whereRaw(
-            sprintf('group_id = ( SELECT id FROM %ssetting_config_group WHERE code = ? )', $prefix), [$groupKey],
+            sprintf('group_id = ( SELECT id FROM %ssetting_config_group WHERE code = ? )', $prefix),
+            [$groupKey],
         )->get()->toArray();
     }
 

@@ -41,7 +41,8 @@ class SystemQueueMessageMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) === 2) {
             $query->whereBetween(
-                'created_at', [
+                'created_at',
+                [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],
@@ -100,7 +101,10 @@ class SystemQueueMessageMapper extends AbstractMapper
             ->join('system_queue_message_receive as r', 'u.id', '=', 'r.user_id')
             ->where('r.message_id', $id)
             ->paginate(
-                $params['pageSize'] ?? $this->model::PAGE_SIZE, ['*'], 'page', $params['page'] ?? 1,
+                $params['pageSize'] ?? $this->model::PAGE_SIZE,
+                ['*'],
+                'page',
+                $params['page'] ?? 1,
             );
 
         return $this->setPaginate($paginate);

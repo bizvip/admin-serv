@@ -128,7 +128,10 @@ class AutoFormController extends MineController
     public function changeStatus($table_id): ResponseInterface
     {
         return $this->service->changeStatus(
-            $table_id, (int)$this->request->input('id'), (string)$this->request->input('statusValue'), (string)$this->request->input('statusName', 'status'),
+            $table_id,
+            (int)$this->request->input('id'),
+            (string)$this->request->input('statusValue'),
+            (string)$this->request->input('statusName', 'status'),
         ) ? $this->success() : $this->error();
     }
 

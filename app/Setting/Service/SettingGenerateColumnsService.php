@@ -64,7 +64,8 @@ class SettingGenerateColumnsService extends AbstractService implements
             // 设置默认选项
             if (!in_array($item['column_name'], $default_column) && empty($item['column_key'])) {
                 $column = array_merge(
-                    $column, [
+                    $column,
+                    [
                         'is_insert' => SettingGenerateColumns::YES,
                         'is_edit'   => SettingGenerateColumns::YES,
                         'is_list'   => SettingGenerateColumns::YES,
@@ -96,7 +97,7 @@ class SettingGenerateColumnsService extends AbstractService implements
 
     private function fieldDispose(array $column): array
     {
-        $object = new class() {
+        $object = new class () {
             public function viewTypeDispose(&$column): void
             {
                 switch ($column['column_type']) {
@@ -104,14 +105,14 @@ class SettingGenerateColumnsService extends AbstractService implements
                         $column['query_type'] = 'like';
                         $column['view_type']  = 'text';
                         break;
-                    // 富文本
+                        // 富文本
                     case 'text':
                     case 'longtext':
                         $column['is_list']   = SettingGenerateColumns::NO;
                         $column['is_query']  = SettingGenerateColumns::NO;
                         $column['view_type'] = 'editor';
                         break;
-                    // 日期字段
+                        // 日期字段
                     case 'timestamp':
                     case 'datetime':
                         $column['view_type']           = 'date';

@@ -141,7 +141,7 @@ class SystemUserMapper extends AbstractMapper
                     ->orWhere('level', 'like', '%,' . $params['dept_id'])
                     ->orWhere('level', 'like', '%,' . $params['dept_id'] . ',%');
             })->pluck('id')->toArray();
-            $query->whereHas('depts', fn($query) => $query->whereIn('id', $deptIds));
+            $query->whereHas('depts', fn ($query) => $query->whereIn('id', $deptIds));
         }
         if (isset($params['username']) && filled($params['username'])) {
             $query->where('username', 'like', '%' . $params['username'] . '%');
@@ -165,7 +165,8 @@ class SystemUserMapper extends AbstractMapper
 
         if (isset($params['created_at']) && filled($params['created_at']) && is_array($params['created_at']) && count($params['created_at']) == 2) {
             $query->whereBetween(
-                'created_at', [
+                'created_at',
+                [
                     $params['created_at'][0] . ' 00:00:00',
                     $params['created_at'][1] . ' 23:59:59',
                 ],
@@ -192,14 +193,16 @@ class SystemUserMapper extends AbstractMapper
         if (isset($params['role_id']) && filled($params['role_id'])) {
             $tablePrefix = env('DB_PREFIX');
             $query->whereRaw(
-                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_role WHERE role_id = ? )", [$params['role_id']],
+                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_role WHERE role_id = ? )",
+                [$params['role_id']],
             );
         }
 
         if (isset($params['post_id']) && filled($params['post_id'])) {
             $tablePrefix = env('DB_PREFIX');
             $query->whereRaw(
-                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_post WHERE post_id = ? )", [$params['post_id']],
+                "id IN ( SELECT user_id FROM {$tablePrefix}system_user_post WHERE post_id = ? )",
+                [$params['post_id']],
             );
         }
 

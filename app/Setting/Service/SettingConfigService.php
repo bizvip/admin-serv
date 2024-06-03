@@ -76,7 +76,8 @@ class SettingConfigService extends AbstractService implements ConfigServiceInter
         foreach ($data as $name => $value) {
             $this->dispatcher->dispatch(
                 new DeleteListenerEvent(
-                    'system-config-update', [
+                    'system-config-update',
+                    [
                         (string)$name,
                     ],
                 ),

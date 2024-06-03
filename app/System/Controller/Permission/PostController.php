@@ -152,7 +152,9 @@ class PostController extends MineController
     public function numberOperation(): ResponseInterface
     {
         return $this->service->numberOperation(
-            (int)$this->request->input('id'), (string)$this->request->input('numberName'), (int)$this->request->input('numberValue', 1),
+            (int)$this->request->input('id'),
+            (string)$this->request->input('numberName'),
+            (int)$this->request->input('numberValue', 1),
         ) ? $this->success() : $this->error();
     }
 

@@ -71,7 +71,8 @@ class SystemUploadFileMapper extends AbstractMapper
         }
         if (isset($params['minDate']) && filled($params['minDate']) && isset($params['maxDate']) && filled($params['maxDate'])) {
             $query->whereBetween(
-                'created_at', [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
+                'created_at',
+                [$params['minDate'] . ' 00:00:00', $params['maxDate'] . ' 23:59:59'],
             );
         }
 
@@ -95,7 +96,8 @@ class SystemUploadFileMapper extends AbstractMapper
                     default => 'local',
                 };
                 $event       = new RealDeleteUploadFile(
-                    $model, $this->container->get(FilesystemFactory::class)->get($storageMode),
+                    $model,
+                    $this->container->get(FilesystemFactory::class)->get($storageMode),
                 );
                 $this->evDispatcher->dispatch($event);
                 if ($event->getConfirm()) {

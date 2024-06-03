@@ -43,7 +43,10 @@ class AutoFromMapper
         string $pageName = 'page',
     ): array {
         $paginate = $this->listQuerySetting($table_id, $params, $isScope)->paginate(
-            (int)($params['pageSize'] ?? 15), ['*'], $pageName, (int)($params[$pageName] ?? 1),
+            (int)($params['pageSize'] ?? 15),
+            ['*'],
+            $pageName,
+            (int)($params[$pageName] ?? 1),
         );
 
         return $this->setPaginate($paginate, $params);
@@ -277,7 +280,8 @@ class AutoFromMapper
                 if ($query_type == 'between') {
                     if (isset($params[$column['column_name']]) && filled($params[$column['column_name']]) && is_array($params[$column['column_name']]) && count($params[$column['column_name']]) == 2) {
                         $query->whereBetween(
-                            $column['column_name'], [
+                            $column['column_name'],
+                            [
                                 $params[$column['column_name']][0],
                                 $params[$column['column_name']][1],
                             ],
@@ -586,7 +590,7 @@ class AutoFromMapper
         //            return $this;
         //        }
 
-        $dataScope = new class($userid, $query, $dataScopeField) {
+        $dataScope = new class ($userid, $query, $dataScopeField) {
             // 用户ID
             protected int $userid;
 
@@ -632,7 +636,8 @@ class AutoFromMapper
                             // 自定义数据权限
                             $deptIds         = $role->depts()->pluck('id')->toArray();
                             $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
+                                $this->userIds,
+                                Db::table('system_user_dept')
                                 ->whereIn('dept_id', $deptIds)
                                 ->pluck('user_id')
                                 ->toArray(),
@@ -646,7 +651,8 @@ class AutoFromMapper
                                 ->pluck('dept_id')
                                 ->toArray();
                             $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
+                                $this->userIds,
+                                Db::table('system_user_dept')
                                 ->whereIn('dept_id', $deptIds)
                                 ->pluck('user_id')
                                 ->toArray(),
@@ -672,7 +678,8 @@ class AutoFromMapper
                             }
                             $deptIds         = array_merge($parentDepts, ...$ids);
                             $this->userIds   = array_merge(
-                                $this->userIds, Db::table('system_user_dept')
+                                $this->userIds,
+                                Db::table('system_user_dept')
                                 ->whereIn('dept_id', $deptIds)
                                 ->pluck('user_id')
                                 ->toArray(),
@@ -703,7 +710,7 @@ class AutoFromMapper
                             //                            }
 
                             $this->builder = $this->builder->whereIn('dept_id', $deptIds);
-                        // no break
+                            // no break
                         case SystemRole::SELF_SCOPE:
                             $this->userIds[] = $this->userid;
                             break;

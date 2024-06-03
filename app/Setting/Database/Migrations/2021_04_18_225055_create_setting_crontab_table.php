@@ -19,7 +19,9 @@ class CreateSettingCrontabTable extends Migration
             $table->bigIncrements('id')->comment('主键');
             $table->addColumn('string', 'name', ['length' => 100, 'comment' => '任务名称']);
             $table->addColumn(
-                'smallInteger', 'type', [
+                'smallInteger',
+                'type',
+                [
                     'default' => 4,
                     'comment' => '任务类型 (1 command, 2 class, 3 url, 4 eval)',
                 ],
@@ -32,7 +34,9 @@ class CreateSettingCrontabTable extends Migration
             ])->nullable();
             $table->addColumn('string', 'rule', ['length' => 32, 'comment' => '任务执行表达式']);
             $table->addColumn(
-                'smallInteger', 'singleton', [
+                'smallInteger',
+                'singleton',
+                [
                     'default' => 1,
                     'comment' => '是否单次执行 (1 是 2 不是)',
                 ],

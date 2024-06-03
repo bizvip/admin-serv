@@ -201,7 +201,8 @@ class ServerMonitorService
             $result['php'] = round(memory_get_usage() / 1024 / 1024, 2);
 
             $result['rate'] = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         } elseif ($this->isCygwin()) {
             $cap   = shell_exec('wmic Path Win32_PhysicalMemory Get Capacity | findstr /V "Capacity"');
@@ -218,7 +219,8 @@ class ServerMonitorService
             $result['usage'] = round($result['total'] - $result['free'], 2);
             $result['php']   = round(memory_get_usage() / 1024 / 1024, 2);
             $result['rate']  = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         } else {
             preg_match('/(\d+)/', shell_exec('system_profiler SPHardwareDataType | grep Memory'), $total);
@@ -228,7 +230,8 @@ class ServerMonitorService
             $result['free']  = round($result['total'] - $result['usage'], 2);
             $result['php']   = round(memory_get_usage() / 1024 / 1024, 2);
             $result['rate']  = sprintf(
-                '%.2f', (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
+                '%.2f',
+                (sprintf('%.2f', $result['usage']) / sprintf('%.2f', $result['total'])) * 100,
             );
         }
 
@@ -307,8 +310,11 @@ class ServerMonitorService
             ];
         }
         $hds = explode(
-            ' ', preg_replace(
-                '/\s{2,}/', ' ', shell_exec('df -h | grep -E "/$"') ?? '',
+            ' ',
+            preg_replace(
+                '/\s{2,}/',
+                ' ',
+                shell_exec('df -h | grep -E "/$"') ?? '',
             ),
         );
 

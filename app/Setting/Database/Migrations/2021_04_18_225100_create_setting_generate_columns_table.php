@@ -54,14 +54,18 @@ class CreateSettingGenerateColumnsTable extends Migration
                 'comment' => '1 非查询字段 2 查询字段',
             ])->nullable();
             $table->addColumn(
-                'string', 'query_type', [
+                'string',
+                'query_type',
+                [
                     'length'  => 100,
                     'default' => 'eq',
                     'comment' => '查询方式 eq 等于, neq 不等于, gt 大于, lt 小于, like 范围',
                 ],
             )->nullable();
             $table->addColumn(
-                'string', 'view_type', [
+                'string',
+                'view_type',
+                [
                     'length'  => 100,
                     'default' => 'text',
                     'comment' => '页面控件，text, textarea, password, select, checkbox, radio, date, upload, ma-upload（封装的上传控件）',

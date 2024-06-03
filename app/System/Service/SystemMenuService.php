@@ -102,7 +102,8 @@ class SystemMenuService extends AbstractService implements MenuServiceInterface
         foreach ($buttonMenus as $button) {
             $this->save(
                 array_merge(
-                    ['parent_id' => $model->id, 'type' => SystemMenu::BUTTON], $button,
+                    ['parent_id' => $model->id, 'type' => SystemMenu::BUTTON],
+                    $button,
                 ),
             );
         }
